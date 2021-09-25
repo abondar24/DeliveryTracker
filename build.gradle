@@ -1,19 +1,42 @@
 plugins {
     id 'java'
+    id 'idea'
+    id "com.github.johnrengelman.shadow" version "7.0.0"
 }
 
 group 'org.abondar.experimental.delivery'
 version '1.0-SNAPSHOT'
 
-repositories {
-    mavenCentral()
+
+allprojects {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+
+        implementation 'io.vertx:vertx-core:4.1.4'
+        implementation 'io.vertx:vertx-rx-java2:4.1.4'
+        implementation 'ch.qos.logback:logback-classic:1.2.3'
+        implementation 'org.slf4j:slf4j-api:1.7.32'
+
+        testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.0'
+        testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.0'
+        testImplementation 'org.mockito:mockito-junit-jupiter:2.23.0'
+        testImplementation 'io.vertx:vertx-junit5:4.1.4'
+    }
 }
 
-dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
-}
+subprojects {
+    apply plugin: 'application'
+    apply plugin: 'com.github.johnrengelman.shadow'
 
-test {
-    useJUnitPlatform()
+    test {
+        useJUnitPlatform()
+    }
+
+    java {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+    }
 }
