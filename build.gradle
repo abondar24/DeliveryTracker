@@ -9,22 +9,12 @@ version '1.0-SNAPSHOT'
 
 
 allprojects {
+    apply plugin: 'idea'
     repositories {
         mavenCentral()
     }
 
-    dependencies {
 
-        implementation 'io.vertx:vertx-core:4.1.4'
-        implementation 'io.vertx:vertx-rx-java2:4.1.4'
-        implementation 'ch.qos.logback:logback-classic:1.2.3'
-        implementation 'org.slf4j:slf4j-api:1.7.32'
-
-        testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.0'
-        testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.0'
-        testImplementation 'org.mockito:mockito-junit-jupiter:2.23.0'
-        testImplementation 'io.vertx:vertx-junit5:4.1.4'
-    }
 }
 
 subprojects {
@@ -33,6 +23,19 @@ subprojects {
 
     test {
         useJUnitPlatform()
+    }
+
+    dependencies {
+
+        implementation 'io.vertx:vertx-core:4.1.4'
+        implementation 'io.vertx:vertx-rx-java2:4.1.4'
+        implementation 'ch.qos.logback:logback-classic:1.2.6'
+        implementation 'org.slf4j:slf4j-api:1.7.32'
+
+        testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.0'
+        testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.0'
+        testImplementation 'org.mockito:mockito-junit-jupiter:3.12.4'
+        testImplementation 'io.vertx:vertx-junit5:4.1.4'
     }
 
     java {
