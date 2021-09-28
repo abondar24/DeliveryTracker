@@ -6,6 +6,8 @@ public enum Headers {
       ORIGIN("origin"),
       CONTENT_TYPE("Content-Type"),
       ACCEPT("accept"),
+      JSON("application/json"),
+      JWT("application/jwt"),
       AUTH("Authorization");
 
 
