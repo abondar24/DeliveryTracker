@@ -61,7 +61,7 @@ public class DeliveryApiVerticle extends AbstractVerticle {
                 .handler(rc -> handler.tokenHandler(rc,webClient,auth));
 
         var jwtHandler = handler.jwtHandler(auth);
-        router.post(API_PREFIX+ PARAM_DELIM +USERNAME_PARAM)
+        router.get(API_PREFIX+ PARAM_DELIM +USERNAME_PARAM)
                 .handler(jwtHandler)
                 .handler(handler::checkUserHandler)
                 .handler(rc-> handler.fetchUserHandler(rc,webClient));
