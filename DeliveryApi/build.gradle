@@ -7,6 +7,9 @@ dependencies {
     implementation ("io.vertx:vertx-web:$vertxVersion")
     implementation ("io.vertx:vertx-web-client:$vertxVersion")
     implementation ("io.vertx:vertx-auth-jwt:$vertxVersion")
+
+    testImplementation ("com.squareup.okhttp:mockwebserver:2.7.5")
+
 }
 
 mainClassName = 'org.abondar.experimental.delivery.api.Main'

@@ -21,7 +21,6 @@ public class ApiUtil {
     public static final String DEVICE_ID_PARAM = "deviceId";
 
     public static final int  USER_SERVICE_PORT = 5000;
-
     public static final int  ACTIVITY_SERVICE_PORT = 6000;
     public static final int  API_PORT = 8000;
 
