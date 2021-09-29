@@ -16,4 +16,5 @@ The service is split into several microservices
 ```yaml
 ./gradlew clean build
 
+foreman start
 ```
