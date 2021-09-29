@@ -1,0 +1,9 @@
+group 'org.abondar.experimental.delivery.user.frontend'
+version '1.0-SNAPSHOT'
+
+
+dependencies {
+
+}
+
+mainClassName = "org.abondar.experimental.delivery.user.frontend.Main"

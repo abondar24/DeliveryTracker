@@ -1,4 +1,4 @@
 rootProject.name = 'DeliveryTracker'
 include 'DeliveryApi'
-
+include 'DeliveryFrontend'
 
