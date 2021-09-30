@@ -18,3 +18,7 @@ The service is split into several microservices
 
 foreman start
 ```
+
+## Note
+
+- public_key.pem and private_key.pem certificates must be stored in jar dir
