@@ -1,9 +1,32 @@
+plugins {
+    id 'com.github.node-gradle.node' version '3.1.0'
+}
+
 group 'org.abondar.experimental.delivery.user.frontend'
 version '1.0-SNAPSHOT'
 
+mainClassName = "org.abondar.experimental.delivery.user.frontend.Main"
 
-dependencies {
+
+node{
+    nodeProjectDir = file("${projectDir}/delivery-frontend")
 
 }
 
-mainClassName = "org.abondar.experimental.delivery.user.frontend.Main"
+task buildFrontend(type: NpmTask) {
+    args = ["run","build"]
+}
+
+tasks.register('copyDist', Copy){
+    dependsOn("buildFrontend")
+    from "$projectDir/delivery-frontend/dist"
+    into "$projectDir/src/main/resources/webroot/assets"
+
+}
+
+processResources.dependsOn copyDist
+
+clean{
+    delete("$node.npmWorkDir/dist")
+    delete("$projectDir/src/main/resources/webroot")
+}

@@ -11,7 +11,7 @@ public class Main {
         System.setProperty("vertx.logger-delegate-factory-class-name", "io.vertx.core.logging.SLF4JLogDelegateFactory");
         var vertx = Vertx.vertx();
 
-        vertx.rxDeployVerticle(new UserFrontendVerticle())
+        vertx.rxDeployVerticle(new DeliveryFrontendVerticle())
                 .subscribe(
                         ok -> logger.info("Server up on port 8080"),
                         err -> logger.info("Error: ",err)

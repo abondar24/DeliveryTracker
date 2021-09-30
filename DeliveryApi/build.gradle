@@ -4,7 +4,6 @@ version '1.0-SNAPSHOT'
 
 
 dependencies {
-    implementation ("io.vertx:vertx-web:$vertxVersion")
     implementation ("io.vertx:vertx-web-client:$vertxVersion")
     implementation ("io.vertx:vertx-auth-jwt:$vertxVersion")
 
