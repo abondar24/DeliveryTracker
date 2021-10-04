@@ -1,4 +1,4 @@
-package org.abondar.experimental.delivery.api.util;
+package org.abondar.experimental.delivery.api;
 
 import io.reactivex.Single;
 import io.vertx.core.http.HttpMethod;

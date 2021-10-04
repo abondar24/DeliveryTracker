@@ -9,12 +9,10 @@ import io.vertx.reactivex.ext.auth.jwt.JWTAuth;
 import io.vertx.reactivex.ext.web.Router;
 import io.vertx.reactivex.ext.web.client.WebClient;
 import org.abondar.experimental.delivery.api.util.CertificateUtil;
-import org.abondar.experimental.delivery.api.util.Handler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
 
 import static org.abondar.experimental.delivery.api.util.ApiUtil.API_PORT;
 import static org.abondar.experimental.delivery.api.util.ApiUtil.API_PREFIX;
