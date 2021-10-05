@@ -109,7 +109,11 @@ API URL - localhost:8000/v1/api
 
 ## Build and Run
 ```yaml
-./gradlew clean build
+ ../gradlew :DeliveryApi:clean :DeliveryApi:build
 
-java -jar DeliveryApi-1.0-SNAPSHOT-all.jar
+ java -jar build/libs/DeliveryApi-1.0-SNAPSHOT-all.jar
 ```
+
+## Note
+
+- public_key.pem and private_key.pem certificates must be stored in jar dir

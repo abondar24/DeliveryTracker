@@ -1,4 +1,5 @@
 # delivery-frontend
+Frontend for Delivery Tracker app
 
 ## Project setup
 ```

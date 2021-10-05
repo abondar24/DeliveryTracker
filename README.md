@@ -7,8 +7,8 @@ A small service tracking goods deliveries
 
 The service is split into several microservices
 
-1. [Delivery Api](DeliveryApi/README.md) 
-
+1. [Api](DeliveryApi/README.md) 
+2. [Frontend](DeliveryFrontend/README.md)
 
 
 ## Build and Run 
@@ -19,6 +19,3 @@ The service is split into several microservices
 foreman start
 ```
 
-## Note
-
-- public_key.pem and private_key.pem certificates must be stored in jar dir
