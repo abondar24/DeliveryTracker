@@ -23,6 +23,10 @@
           <span class="badge badge-success">{{ monthDistance }}</span> this month, and
           <span class="badge badge-success">{{ dayDistance }}</span> today.
         </li>
+        <li>
+          Current delivery <span class="badge badge-warning">{{ currentDelivery }}</span> which is
+          <span class="badge badge-warning">{{ currentDescription }}</span>.
+        </li>
       </ul>
     </div>
     <div class="mt-5">
@@ -63,6 +67,8 @@ export default {
       dayDelivered: 0,
       email: 'n/a',
       garage: 'n/a',
+      currentDelivery: 'n/a',
+      currentDescription: 'n/a'
     }
   },
   mounted() {
@@ -168,6 +174,20 @@ export default {
             } else {
               this.notification = err.message
             }
+          })
+
+
+      axios.get(`http://localhost:8000/api/v1/${store.getUsername()}/current}`, {
+        headers: {
+          'Authorization': `Bearer ${store.getToken()}`
+        }
+      })
+          .then(response => {
+            this.currentDelivery = response.data.delivery
+            this.currentDescription = response.data.description
+          })
+          .catch(err => {
+            this.notification = err.message
           })
     },
     refreshFromStore() {
