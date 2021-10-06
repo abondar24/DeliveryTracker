@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
 
 import static org.abondar.experimental.delivery.api.util.ApiUtil.ACTIVITY_SERVICE_PORT;
 import static org.abondar.experimental.delivery.api.util.ApiUtil.AUTH_ENDPOINT;
+import static org.abondar.experimental.delivery.api.util.ApiUtil.CURRENT_ENDPOINT;
 import static org.abondar.experimental.delivery.api.util.ApiUtil.DAY_PARAM;
 import static org.abondar.experimental.delivery.api.util.ApiUtil.DEVICE_ID_PARAM;
 import static org.abondar.experimental.delivery.api.util.ApiUtil.MONTH_PARAM;
@@ -198,6 +199,20 @@ public class Handler {
                 );
     }
 
+    public void currentDeliveryHandler(RoutingContext ctx, WebClient webClient) {
+        var deviceId = ctx.user()
+                .principal()
+                .getString(DEVICE_ID_PARAM);
+
+        webClient.get(ACTIVITY_SERVICE_PORT, SERVER_HOST,
+                        PATH_DELIM + deviceId + CURRENT_ENDPOINT)
+                .as(BodyCodec.jsonObject())
+                .rxSend()
+                .subscribe(
+                        resp -> sendResponse(ctx, resp),
+                        err -> sendErrorResponse(ctx, 502, err)
+                );
+    }
     private void sendResponse(RoutingContext ctx, HttpResponse<JsonObject> resp) {
         if (resp.statusCode() != 200) {
             sendResponse(ctx, resp.statusCode());

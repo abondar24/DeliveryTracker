@@ -106,7 +106,19 @@ API URL - localhost:8000/v1/api
           403 - Unauthenticated
           502 - Server error
 ```
-
+8. GET localhost:8000/v1/api/:username/current - get current delivery
+   Headers:
+   Authroization Bearer <jwt-token>
+   Response:
+   200 - Delivery data
+   Body: {
+   "delivery": "delivery123",
+   "description": "description"
+   }
+   401 - Unauthorized
+   403 - Unauthenticated
+   502 - Server error
+```
 ## Build and Run
 ```yaml
  ../gradlew :DeliveryApi:clean :DeliveryApi:build

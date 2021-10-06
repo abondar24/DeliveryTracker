@@ -16,6 +16,7 @@ import java.io.IOException;
 
 import static org.abondar.experimental.delivery.api.util.ApiUtil.API_PORT;
 import static org.abondar.experimental.delivery.api.util.ApiUtil.API_PREFIX;
+import static org.abondar.experimental.delivery.api.util.ApiUtil.CURRENT_ENDPOINT;
 import static org.abondar.experimental.delivery.api.util.ApiUtil.DAY_PARAM;
 import static org.abondar.experimental.delivery.api.util.ApiUtil.MONTH_PARAM;
 import static org.abondar.experimental.delivery.api.util.ApiUtil.PARAM_DELIM;
@@ -86,6 +87,11 @@ public class DeliveryApiVerticle extends AbstractVerticle {
                 .handler(jwtHandler)
                 .handler(handler::checkUserHandler)
                 .handler(rc-> handler.dayKilometersHandler(rc,webClient));
+
+        router.get(API_PREFIX+PARAM_DELIM+USERNAME_PARAM+CURRENT_ENDPOINT)
+                .handler(jwtHandler)
+                .handler(handler::checkUserHandler)
+                .handler(rc-> handler.currentDeliveryHandler(rc,webClient));
 
         return router;
     }
