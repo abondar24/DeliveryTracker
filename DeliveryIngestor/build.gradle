@@ -1,0 +1,11 @@
+
+
+group 'org.abondar.experimental.delivery.ingestor'
+version '1.0-SNAPSHOT'
+
+mainClassName = "org.abondar.experimental.delivery.ingestor.Main"
+
+dependencies {
+   implementation ("io.vertx:vertx-amqp-client:$vertxVersion")
+   implementation ("io.vertx:vertx-kafka-client:$vertxVersion")
+}

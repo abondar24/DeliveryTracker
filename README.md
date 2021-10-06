@@ -9,7 +9,7 @@ The service is split into several microservices
 
 1. [Api](DeliveryApi/README.md) 
 2. [Frontend](DeliveryFrontend/README.md)
-
+3. [Ingestor](DeliveryIngestor/README.md)
 
 ## Build and Run 
 
@@ -18,4 +18,3 @@ The service is split into several microservices
 
 foreman start
 ```
-
