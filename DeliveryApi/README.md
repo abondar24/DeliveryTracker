@@ -106,7 +106,7 @@ API URL - localhost:8000/v1/api
           403 - Unauthenticated
           502 - Server error
 
-   8. GET localhost:8000/v1/api/:username/current - get current delivery
+8. GET localhost:8000/v1/api/:username/current - get current delivery
         Headers:
    Authroization Bearer <jwt-token>
         Response:
