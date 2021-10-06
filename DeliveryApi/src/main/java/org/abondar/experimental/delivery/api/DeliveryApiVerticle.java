@@ -88,6 +88,11 @@ public class DeliveryApiVerticle extends AbstractVerticle {
                 .handler(handler::checkUserHandler)
                 .handler(rc-> handler.dayKilometersHandler(rc,webClient));
 
+        router.get(API_PREFIX+PARAM_DELIM+USERNAME_PARAM+CURRENT_ENDPOINT)
+                .handler(jwtHandler)
+                .handler(handler::checkUserHandler)
+                .handler(rc-> handler.currentDeliveryHandler(rc,webClient));
+
         return router;
     }
 
