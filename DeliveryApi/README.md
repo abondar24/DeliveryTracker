@@ -3,7 +3,7 @@
 Backend api of delivery tracking service
 
 ## API description
-```yaml
+```
 API URL - localhost:8000/v1/api
 
 1. POST localhost:8000/v1/api/register - register a new user
@@ -105,20 +105,22 @@ API URL - localhost:8000/v1/api
           401 - Unauthorized
           403 - Unauthenticated
           502 - Server error
-```
-8. GET localhost:8000/v1/api/:username/current - get current delivery
-   Headers:
+
+   8. GET localhost:8000/v1/api/:username/current - get current delivery
+        Headers:
    Authroization Bearer <jwt-token>
-   Response:
-   200 - Delivery data
-   Body: {
-   "delivery": "delivery123",
-   "description": "description"
-   }
-   401 - Unauthorized
-   403 - Unauthenticated
-   502 - Server error
+        Response:
+        200 - Delivery data
+        Body: {
+           "delivery": "delivery123",
+           "description": "description"
+        }
+        401 - Unauthorized
+        403 - Unauthenticated
+        502 - Server error
 ```
+
+
 ## Build and Run
 ```yaml
  ../gradlew :DeliveryApi:clean :DeliveryApi:build
