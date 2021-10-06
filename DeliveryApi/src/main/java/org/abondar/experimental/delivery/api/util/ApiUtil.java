@@ -14,8 +14,6 @@ public class ApiUtil {
     public static final String AUTH_ENDPOINT = "/authenticate";
     public static final String USER_TOTAL_ENDPOINT = "/total";
 
-    public static final String CURRENT_ENDPOINT = "/current";
-
     public static final String USERNAME_PARAM = "username";
     public static final String YEAR_PARAM = "year";
     public static final String MONTH_PARAM = "month";
