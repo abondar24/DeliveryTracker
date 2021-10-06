@@ -85,12 +85,6 @@ public class DeliveryApiTest {
                     body.put("distance","456");
                 }
 
-                if (request.getPath().contains(ApiUtil.CURRENT_ENDPOINT)){
-                    body.put("delivery", "delivery123");
-                    body.put("description","description");
-                }
-
-
                 resp.setBody(body.toString());
                 return resp;
             }
@@ -283,27 +277,4 @@ public class DeliveryApiTest {
                 .statusCode(200);
     }
 
-
-    @Test
-    public void currentDeliveryTest() {
-
-        var json = new JsonObject()
-                .put("username", "test")
-                .put("password", "test123");
-
-        var jwt = given(spec)
-                .contentType(ContentType.JSON)
-                .body(json.toString())
-                .post(ApiUtil.TOKEN_ENDPOINT)
-                .body().asString();
-
-        given(spec)
-                .contentType(ContentType.JSON)
-                .headers("Authorization", "Bearer " + jwt)
-                .get("/test"+ApiUtil.CURRENT_ENDPOINT)
-                .then()
-                .and()
-                .assertThat()
-                .statusCode(200);
-    }
 }

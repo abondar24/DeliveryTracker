@@ -199,20 +199,6 @@ public class Handler {
                 );
     }
 
-    public void currentDeliveryHandler(RoutingContext ctx, WebClient webClient) {
-        var deviceId = ctx.user()
-                .principal()
-                .getString(DEVICE_ID_PARAM);
-
-        webClient.get(ACTIVITY_SERVICE_PORT, SERVER_HOST,
-                        PATH_DELIM + deviceId + CURRENT_ENDPOINT)
-                .as(BodyCodec.jsonObject())
-                .rxSend()
-                .subscribe(
-                        resp -> sendResponse(ctx, resp),
-                        err -> sendErrorResponse(ctx, 502, err)
-                );
-    }
     private void sendResponse(RoutingContext ctx, HttpResponse<JsonObject> resp) {
         if (resp.statusCode() != 200) {
             sendResponse(ctx, resp.statusCode());

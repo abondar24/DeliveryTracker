@@ -108,7 +108,7 @@ API URL - localhost:8000/v1/api
 
 8. GET localhost:8000/v1/api/:username/current - get current delivery
         Headers:
-   Authroization Bearer <jwt-token>
+             Authroization Bearer <jwt-token>
         Response:
         200 - Delivery data
         Body: {
