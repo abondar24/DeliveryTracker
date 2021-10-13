@@ -1,4 +1,4 @@
-package org.abondar.experimental.delivery.ingestor;
+package org.abondar.experimental.delivery.ingester;
 
 import io.vertx.reactivex.core.Vertx;
 import org.slf4j.Logger;
@@ -10,7 +10,7 @@ public class Main {
     public static void main(String[] args) {
         var vertx = Vertx.vertx();
 
-        vertx.rxDeployVerticle(new IngestorVerticle())
+        vertx.rxDeployVerticle(new IngesterVerticle())
                 .subscribe(
                         ok -> logger.info("Server up on port 4000"),
                         err -> logger.info("Error: ",err)

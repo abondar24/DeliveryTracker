@@ -2,4 +2,4 @@ delivery-api: cd DeliveryApi && java -jar build/libs/DeliveryApi-1.0-SNAPSHOT-al
 
 delivery-frontend: java -jar DeliveryFrontend/build/libs/DeliveryFrontend-1.0-SNAPSHOT-all.jar
 
-delivery-ingestor: java -jar DeliveryIngestor/build/libs/DeliveryIngestor-1.0-SNAPSHOT-all.jar
+delivery-ingester: java -jar DeliveryIngester/build/libs/DeliveryIngester-1.0-SNAPSHOT-all.jar

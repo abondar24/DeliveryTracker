@@ -1,5 +1,5 @@
 rootProject.name = 'DeliveryTracker'
 include 'DeliveryApi'
 include 'DeliveryFrontend'
-include 'DeliveryIngestor'
+include 'DeliveryIngester'
 

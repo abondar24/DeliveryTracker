@@ -1,5 +1,11 @@
 # Delivery Ingestor
 
+Accepts data from device via AMQP or http and posts to the corresponding Kafka Topic
+
+## Access
+```yaml
+http://localhost:4000
+```
 
 ## Build and run
 ```yaml
