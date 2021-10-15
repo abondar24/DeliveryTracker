@@ -18,3 +18,7 @@ The service is split into several microservices
 
 foreman start
 ```
+
+## Note
+
+Integration tests randomly fail with connection refused exception

@@ -9,7 +9,10 @@ http://localhost:4000
 
 ## Build and run
 ```yaml
-../gradlew :DeliveryIngestor:clean :DeliveryIngestor:build
+../gradlew :DeliveryIngester:clean :DeliveryIngestr:build
 
-java -jar build/libs/DeliveryIngestor-1.0-SNAPSHOT-all.jar
+java -jar build/libs/DeliveryIngester-1.0-SNAPSHOT-all.jar
 ```
+## Note
+
+Integration tests randomly fail with connection refused exception

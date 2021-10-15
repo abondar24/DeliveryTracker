@@ -12,6 +12,8 @@ import org.abondar.experimental.delivery.ingester.util.VerificationUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static org.abondar.experimental.delivery.ingester.util.IngesterUtil.INGEST_ENDPOINT;
+
 public class IngesterVerticle extends AbstractVerticle {
 
     private static final Logger logger = LoggerFactory.getLogger(IngesterVerticle.class);
@@ -27,7 +29,7 @@ public class IngesterVerticle extends AbstractVerticle {
         router.post()
                 .handler(BodyHandler.create());
 
-        router.post("/ingest")
+        router.post(INGEST_ENDPOINT)
                 .handler((ctx) -> handleIngest(ctx, producer));
         return vertx.createHttpServer()
                 .requestHandler(router)

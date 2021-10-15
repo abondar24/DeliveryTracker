@@ -4,6 +4,8 @@ public class IngesterUtil {
 
     public static final int INGESTER_PORT = 4000;
 
+    public static final String INGEST_ENDPOINT = "/ingest";
+
     public static final int KAFKA_PORT = 9092;
 
     public static final int AMQP_PORT = 5672;
