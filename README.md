@@ -14,6 +14,8 @@ The service is split into several microservices
 ## Build and Run 
 
 ```yaml
+./topic_setup.sh
+
 ./gradlew clean build
 
 foreman start
