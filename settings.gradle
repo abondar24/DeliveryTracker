@@ -2,4 +2,5 @@ rootProject.name = 'DeliveryTracker'
 include 'DeliveryApi'
 include 'DeliveryFrontend'
 include 'DeliveryIngester'
+include 'DeliveryNotificator'
 
