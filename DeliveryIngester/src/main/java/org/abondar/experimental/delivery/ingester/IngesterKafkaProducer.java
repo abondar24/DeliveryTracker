@@ -1,7 +1,5 @@
 package org.abondar.experimental.delivery.ingester;
 
-import io.vertx.core.impl.logging.Logger;
-import io.vertx.core.impl.logging.LoggerFactory;
 import io.vertx.core.json.JsonObject;
 import io.vertx.reactivex.kafka.client.producer.KafkaProducer;
 import io.vertx.reactivex.core.Vertx;

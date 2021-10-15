@@ -18,10 +18,10 @@ import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.TimeUnit;
 
-import static org.abondar.experimental.delivery.ingester.util.IngesterUtil.AMQP_EVENT;
+import static org.abondar.experimental.delivery.ingester.util.IngesterUtil.AMQP_QUEUE;
 import static org.abondar.experimental.delivery.ingester.util.IngesterUtil.AMQP_PORT;
 import static org.abondar.experimental.delivery.ingester.util.IngesterUtil.AMQ_USER;
-import static org.abondar.experimental.delivery.ingester.util.IngesterUtil.CONTENT_TYPE;
+import static org.abondar.experimental.delivery.ingester.util.IngesterUtil.CONTENT_TYPE_JSON;
 import static org.abondar.experimental.delivery.ingester.util.IngesterUtil.SERVER_HOST;
 
 public class IngesterAmqpClient {
@@ -43,7 +43,7 @@ public class IngesterAmqpClient {
 
         AmqpClient.create(vertx, clientOpts)
                 .rxConnect()
-                .flatMap(conn -> conn.rxCreateReceiver(AMQP_EVENT, receiverOpts))
+                .flatMap(conn -> conn.rxCreateReceiver(AMQP_QUEUE, receiverOpts))
                 .flatMapPublisher(AmqpReceiver::toFlowable)
                 .doOnError(this::logError)
                 .retryWhen(this::retryLater)
@@ -75,7 +75,7 @@ public class IngesterAmqpClient {
     private void handleMessage(AmqpMessage message) {
         var payload = message.bodyAsJsonObject();
         if (!message.contentType()
-                .equals(CONTENT_TYPE) || VerificationUtil.isInvalidPayload(payload)) {
+                .equals(CONTENT_TYPE_JSON) || VerificationUtil.isInvalidPayload(payload)) {
             logger.error("Ivalid AMQP message: {}", message.bodyAsBinary());
             message.accepted();
             return;

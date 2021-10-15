@@ -12,8 +12,9 @@ public class IngesterUtil {
 
     public static final String AMQ_USER = "admin";
 
-    public static final String CONTENT_TYPE = "application/json";
-    public static final String AMQP_EVENT = "delivery-events";
+    public static final String CONTENT_TYPE_JSON = "application/json";
+
+    public static final String AMQP_QUEUE = "delivery-events";
 
     public static final String KAFKA_TOPIC = "delivery.data";
 
