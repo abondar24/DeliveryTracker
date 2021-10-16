@@ -19,11 +19,9 @@ public class IngesterIntegrationTest {
 
 
     protected KafkaConsumer<String, JsonObject> createConsumer(Vertx vertx){
-        Map<String, String> config = new HashMap<>();
-        config.put("bootstrap.servers", SERVER_HOST + ":" + KAFKA_PORT);
-        config.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
-        config.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
-
+        Map<String, String> config = Map.of("bootstrap.servers", SERVER_HOST + ":" + KAFKA_PORT,
+                "key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer",
+                "value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         return KafkaConsumer.create(vertx, config);
 
     }

@@ -21,20 +21,18 @@ import static org.abondar.experimental.delivery.ingester.util.IngesterUtil.SERVE
 public class IngesterKafkaProducer {
 
 
-
-
     public static KafkaProducer<String, JsonObject> initProducer(Vertx vertx){
         return KafkaProducer.create(vertx,configProducer());
     }
 
     private static Map<String,String> configProducer(){
-        Map<String,String> config = new HashMap<>();
-        config.put("bootstrap.servers",SERVER_HOST+":"+KAFKA_PORT);
-        config.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
-        config.put("value.serializer", "io.vertx.kafka.client.serialization.JsonObjectSerializer");
-        config.put("acks", "1");
 
-        return config;
+        return Map.of(
+                "bootstrap.servers",SERVER_HOST+":"+KAFKA_PORT,
+                "key.serializer", "org.apache.kafka.common.serialization.StringSerializer",
+                "value.serializer", "io.vertx.kafka.client.serialization.JsonObjectSerializer",
+                "acks", "1"
+        );
     }
 
     public static KafkaProducerRecord<String, JsonObject> makeRecord(JsonObject payload){
