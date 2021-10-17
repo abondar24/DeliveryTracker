@@ -1,7 +1,11 @@
 # Delivery Notificator
 
-Service getting data from Kafka and sending email notifications 
+Service getting data from Kafka and sending email notifications to users which failed with target or achieved it.
 
+## Access
+```yaml
+localhost:4000
+```
 
 ## Build and run
 ```yaml
@@ -9,6 +13,3 @@ Service getting data from Kafka and sending email notifications
 
 java -jar build/libs/DeliveryNotificator-1.0-SNAPSHOT-all.jar
 ```
-## Note
-- Artemis and Kafka are required to run this service
-- Integration tests randomly fail with connection refused exception

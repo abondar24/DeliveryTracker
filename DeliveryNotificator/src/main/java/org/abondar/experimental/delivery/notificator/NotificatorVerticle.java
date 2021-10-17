@@ -15,13 +15,9 @@ import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.TimeUnit;
 
-import static org.abondar.experimental.delivery.notificator.NotificatorUtil.DELIVERY_MINUMUM;
-import static org.abondar.experimental.delivery.notificator.NotificatorUtil.DELIVERY_TARGET;
-import static org.abondar.experimental.delivery.notificator.NotificatorUtil.DISTANCE_MINIMUM;
-import static org.abondar.experimental.delivery.notificator.NotificatorUtil.DISTANCE_TARGET;
+import static org.abondar.experimental.delivery.notificator.NotificatorUtil.EMAIL_PORT;
 import static org.abondar.experimental.delivery.notificator.NotificatorUtil.KAFKA_CONFIG;
 import static org.abondar.experimental.delivery.notificator.NotificatorUtil.KAFKA_TOPIC;
-import static org.abondar.experimental.delivery.notificator.NotificatorUtil.EMAIL_PORT;
 import static org.abondar.experimental.delivery.notificator.NotificatorUtil.SERVER_HOST;
 
 public class NotificatorVerticle extends AbstractVerticle {
@@ -67,7 +63,6 @@ public class NotificatorVerticle extends AbstractVerticle {
                 .setHostname(SERVER_HOST)
                 .setPort(EMAIL_PORT);
     }
-
 
 
     private Flowable<Throwable> retry(Flowable<Throwable> err) {
