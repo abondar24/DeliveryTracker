@@ -7,8 +7,11 @@ import io.vertx.ext.mail.MailResult;
 import io.vertx.reactivex.ext.mail.MailClient;
 import io.vertx.reactivex.ext.web.client.HttpResponse;
 import io.vertx.reactivex.ext.web.client.WebClient;
+import io.vertx.reactivex.ext.web.client.predicate.ResponsePredicate;
 import io.vertx.reactivex.ext.web.codec.BodyCodec;
 import io.vertx.reactivex.kafka.client.consumer.KafkaConsumerRecord;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static org.abondar.experimental.delivery.notificator.NotificatorUtil.DELIVERED_FIELD;
 import static org.abondar.experimental.delivery.notificator.NotificatorUtil.DEVICE_ENDPOINT;
@@ -22,6 +25,9 @@ import static org.abondar.experimental.delivery.notificator.NotificatorUtil.USER
 import static org.abondar.experimental.delivery.notificator.NotificatorUtil.USER_SERVICE_PORT;
 
 public class NotificationSender {
+
+    private static final Logger logger = LoggerFactory.getLogger(NotificationSender.class);
+
     private final MailClient mailClient;
 
     private final WebClient webClient;
@@ -38,14 +44,17 @@ public class NotificationSender {
         var delivered = val.getInteger(DELIVERED_FIELD);
         var distance = val.getInteger(DISTANCE_FIELD);
 
-        return webClient.get(USER_SERVICE_PORT, SERVER_HOST, DEVICE_ENDPOINT + deviceId)
+        return webClient.get(USER_SERVICE_PORT, SERVER_HOST, DEVICE_ENDPOINT +"/"+ deviceId)
+                .expect(ResponsePredicate.SC_SUCCESS)
                 .as(BodyCodec.jsonObject())
                 .rxSend()
+                .doOnError(err-> logger.error("User Service Error: "+err.getMessage()))
                 .map(HttpResponse::body)
                 .map(json -> json.getString(USERNAME_FIELD))
                 .flatMap(this::getEmailAddress)
                 .map(email -> buildEmail(delivered, distance, email,positive))
-                .flatMap(mailClient::rxSendMail);
+                .flatMap(mailClient::rxSendMail)
+                .doOnError(err-> logger.error("Email Server Error: "+err.getMessage()));
     }
 
 

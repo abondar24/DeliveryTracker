@@ -7,4 +7,8 @@ dependencies {
     implementation("io.vertx:vertx-mail-client:$vertxVersion")
     implementation ("io.vertx:vertx-web-client:$vertxVersion")
     implementation ("io.vertx:vertx-kafka-client:$vertxVersion")
+
+    testImplementation ("com.squareup.okhttp:mockwebserver:$mockServerVersion")
+    testImplementation ("com.icegreen:greenmail:2.0.0-alpha-2")
+
 }
