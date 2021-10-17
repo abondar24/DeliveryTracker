@@ -3,4 +3,5 @@ include 'DeliveryApi'
 include 'DeliveryFrontend'
 include 'DeliveryIngester'
 include 'DeliveryNotificator'
+include 'DeliveryUserService'
 
