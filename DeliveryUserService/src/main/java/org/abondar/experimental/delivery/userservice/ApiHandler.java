@@ -3,7 +3,6 @@ package org.abondar.experimental.delivery.userservice;
 import io.vertx.core.json.JsonObject;
 import io.vertx.reactivex.ext.web.RoutingContext;
 import io.vertx.reactivex.ext.web.handler.BodyHandler;
-import org.abondar.experimental.delivery.userservice.service.AuthService;
 import org.abondar.experimental.delivery.userservice.service.MongoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,11 +22,9 @@ public class ApiHandler {
 
     private final MongoService mongoService;
 
-    private final AuthService authService;
 
-    public ApiHandler(MongoService mongoService, AuthService authService) {
+    public ApiHandler(MongoService mongoService) {
         this.mongoService = mongoService;
-        this.authService = authService;
     }
 
     public BodyHandler bodyHandler() {
@@ -77,7 +74,7 @@ public class ApiHandler {
 
         mongoService.updateUser(username, body)
                 .subscribe(
-                        () -> completeUpdate(rc),
+                        () -> completeSuccess(rc),
                         err -> handleServerError(rc, err)
                 );
     }
@@ -93,7 +90,11 @@ public class ApiHandler {
 
     public void authenticate(RoutingContext rc) {
         var body = getBody(rc);
-        authService.authenticateUser(body);
+        mongoService.authenticateUser(body)
+                .subscribe(
+                        user ->completeSuccess(rc),
+                        err -> handleAuthenticationError(rc,err)
+                );
     }
 
 
@@ -135,12 +136,18 @@ public class ApiHandler {
                 .end(json.encode());
     }
 
-    private void completeUpdate(RoutingContext rc) {
+    private void completeSuccess(RoutingContext rc) {
         rc.response()
                 .setStatusCode(200)
                 .end();
     }
 
+    private void handleAuthenticationError(RoutingContext rc,Throwable err){
+        logger.error("Authentication error {}",err.getMessage());
+        rc.response()
+                .setStatusCode(401)
+                .end();
+    }
 
     private void handleFetchError(RoutingContext rc, Throwable err) {
         if (err instanceof NoSuchFieldException) {

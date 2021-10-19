@@ -3,8 +3,6 @@ package org.abondar.experimental.delivery.userservice;
 import io.reactivex.Completable;
 import io.vertx.reactivex.core.AbstractVerticle;
 import io.vertx.reactivex.ext.web.Router;
-import org.abondar.experimental.delivery.userservice.service.AuthService;
-import org.abondar.experimental.delivery.userservice.service.MongoService;
 import org.abondar.experimental.delivery.userservice.service.MongoServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +24,7 @@ public class UserServiceVerticle extends AbstractVerticle {
         var router = Router.router(vertx);
 
         var mongoService = new MongoServiceImpl(vertx);
-        var handler = new ApiHandler(mongoService,authService);
+        var handler = new ApiHandler(mongoService);
 
         router.post()
                 .handler(handler.bodyHandler());

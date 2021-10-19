@@ -8,6 +8,8 @@ import io.vertx.core.json.JsonObject;
 import io.vertx.ext.auth.mongo.MongoAuthenticationOptions;
 import io.vertx.ext.auth.mongo.MongoAuthorizationOptions;
 import io.vertx.reactivex.core.Vertx;
+import io.vertx.reactivex.ext.auth.User;
+import io.vertx.reactivex.ext.auth.mongo.MongoAuthentication;
 import io.vertx.reactivex.ext.auth.mongo.MongoUserUtil;
 import io.vertx.reactivex.ext.mongo.MongoClient;
 
@@ -124,5 +126,10 @@ public class MongoServiceImpl implements MongoService {
 
         return mongoClient.rxFindOne(USER_COLLECTION, query, fields)
                 .toSingle();
+    }
+
+    public Single<User> authenticateUser(JsonObject json){
+        var authProvider = MongoAuthentication.create(mongoClient,new MongoAuthenticationOptions());
+        return authProvider.rxAuthenticate(json);
     }
 }

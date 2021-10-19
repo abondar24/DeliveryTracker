@@ -3,6 +3,7 @@ package org.abondar.experimental.delivery.userservice.service;
 import io.reactivex.Completable;
 import io.reactivex.Single;
 import io.vertx.core.json.JsonObject;
+import io.vertx.reactivex.ext.auth.User;
 
 public interface MongoService {
 
@@ -13,4 +14,6 @@ public interface MongoService {
     Completable updateUser(String username, JsonObject body);
 
     Single<JsonObject> getDevice(String deviceId);
+
+    Single<User> authenticateUser(JsonObject json);
 }
