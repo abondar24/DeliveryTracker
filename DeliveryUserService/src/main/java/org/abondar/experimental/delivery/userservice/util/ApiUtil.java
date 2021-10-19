@@ -11,9 +11,7 @@ public class ApiUtil {
 
     public static final String DEVICE_ENDPOINT = "/device";
 
-
     public static final String USERNAME_FIELD = "username";
-
 
     public static final String PASSWORD_FIELD = "password";
 

@@ -1,15 +1,16 @@
 package org.abondar.experimental.delivery.userservice.service;
 
+import io.reactivex.Completable;
+import io.reactivex.Single;
 import io.vertx.core.json.JsonObject;
-import io.vertx.reactivex.ext.web.RoutingContext;
 
 public interface MongoService {
 
-    void registerUser(String username, String password, JsonObject extraInfo);
+    Completable registerUser(String username, String password, JsonObject extraInfo);
 
-    void getUser(String username);
+    Single<JsonObject> getUser(String username);
 
-    void updateUser(String username,JsonObject body);
+    Completable updateUser(String username, JsonObject body);
 
-    void getDevice(String deviceId);
+    Single<JsonObject> getDevice(String deviceId);
 }
