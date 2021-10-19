@@ -4,6 +4,8 @@ import io.vertx.reactivex.core.Vertx;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static org.abondar.experimental.delivery.ingester.util.IngesterUtil.INGESTER_PORT;
+
 public class Main {
     private static final Logger logger = LoggerFactory.getLogger(Main.class);
 
@@ -12,7 +14,7 @@ public class Main {
 
         vertx.rxDeployVerticle(new IngesterVerticle())
                 .subscribe(
-                        ok -> logger.info("Server up on port 4000"),
+                        ok -> logger.info("Server up on port {}",INGESTER_PORT),
                         err -> logger.info("Error: ",err)
                 );
     }

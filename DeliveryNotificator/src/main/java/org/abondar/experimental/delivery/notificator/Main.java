@@ -13,7 +13,7 @@ public class Main {
 
         vertx.rxDeployVerticle(new NotificatorVerticle())
                 .subscribe(
-                        ok -> logger.info("Server up on port 4000"),
+                        ok -> logger.info("Server up"),
                         err -> logger.info("Error: ",err)
                 );
     }
