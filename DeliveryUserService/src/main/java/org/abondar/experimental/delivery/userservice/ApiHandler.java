@@ -83,8 +83,8 @@ public class ApiHandler {
         var deviceId = rc.pathParam(DEVICE_FIELD);
         mongoService.getDevice(deviceId)
                 .subscribe(
-                        json -> completeFetch(rc,json),
-                        err->handleFetchError(rc,err)
+                        json -> completeFetch(rc, json),
+                        err -> handleFetchError(rc, err)
                 );
     }
 
@@ -92,8 +92,8 @@ public class ApiHandler {
         var body = getBody(rc);
         mongoService.authenticateUser(body)
                 .subscribe(
-                        user ->completeSuccess(rc),
-                        err -> handleAuthenticationError(rc,err)
+                        user -> completeSuccess(rc),
+                        err -> handleAuthenticationError(rc, err)
                 );
     }
 
@@ -107,8 +107,8 @@ public class ApiHandler {
     }
 
     private boolean isFieldWrong(JsonObject body) {
-        var usernamePattern = Pattern.compile("\\w[\\w+]-]*");
-        var deviceIdPattern = Pattern.compile("\\w[\\w+]-]*");
+        var usernamePattern = Pattern.compile("\\w[\\w+|-]*");
+        var deviceIdPattern = Pattern.compile("\\w[\\w+|-]*");
         var emailPattern = Pattern.compile("^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$");
 
         return !usernamePattern.matcher(body.getString(USERNAME_FIELD)).matches() ||
@@ -142,8 +142,8 @@ public class ApiHandler {
                 .end();
     }
 
-    private void handleAuthenticationError(RoutingContext rc,Throwable err){
-        logger.error("Authentication error {}",err.getMessage());
+    private void handleAuthenticationError(RoutingContext rc, Throwable err) {
+        logger.error("Authentication error {}", err.getMessage());
         rc.response()
                 .setStatusCode(401)
                 .end();
