@@ -16,4 +16,6 @@ public interface MongoService {
     Single<JsonObject> getDevice(String deviceId);
 
     Single<User> authenticateUser(JsonObject json);
+
+    void cleanDb(String collection);
 }

@@ -47,10 +47,13 @@ public class ApiHandler {
         var password = body.getString(PASSWORD_FIELD);
 
         var extraInfo = new JsonObject();
-        extraInfo.put("$set", new JsonObject());
-        extraInfo.put(EMAIL_FIELD, body.getString(EMAIL_FIELD));
-        extraInfo.put(GARAGE_FIELD, body.getString(GARAGE_FIELD));
-        extraInfo.put(DEVICE_FIELD, body.getString(DEVICE_FIELD));
+        var extraInfoSet = new JsonObject();
+        extraInfoSet.put(EMAIL_FIELD, body.getString(EMAIL_FIELD));
+        extraInfoSet.put(GARAGE_FIELD, body.getString(GARAGE_FIELD));
+        extraInfoSet.put(DEVICE_FIELD, body.getString(DEVICE_FIELD));
+
+        extraInfo.put("$set",extraInfoSet);
+
 
         mongoService.registerUser(username, password, extraInfo)
                 .subscribe(

@@ -34,6 +34,9 @@ public class MongoServiceImpl implements MongoService {
         var config = new JsonObject();
         config.put("host", MONGO_HOST);
         config.put("port", MONGO_PORT);
+        config.put("username","admin");
+        config.put("password","admin123");
+
         config.put("db_name", DATABASE_NAME);
 
         this.mongoClient = MongoClient.createShared(vertx, config);
@@ -131,5 +134,10 @@ public class MongoServiceImpl implements MongoService {
     public Single<User> authenticateUser(JsonObject json){
         var authProvider = MongoAuthentication.create(mongoClient,new MongoAuthenticationOptions());
         return authProvider.rxAuthenticate(json);
+    }
+
+    @Override
+    public void cleanDb(String collection) {
+           mongoClient.dropCollection(USER_COLLECTION);
     }
 }
