@@ -19,7 +19,7 @@ public class UserServiceVerticle extends AbstractVerticle {
 
     private static final Logger logger = LoggerFactory.getLogger(UserServiceVerticle.class);
 
-    private MongoService mongoService;
+    private final MongoService mongoService;
 
     public UserServiceVerticle(){
         this.mongoService = new MongoServiceImpl(vertx);
