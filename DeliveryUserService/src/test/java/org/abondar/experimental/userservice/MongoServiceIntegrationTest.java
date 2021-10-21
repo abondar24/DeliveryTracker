@@ -46,11 +46,13 @@ public class MongoServiceIntegrationTest {
     }
 
     @Test
-    public void getUserTest(VertxTestContext testContext) {
+    public void getUserTest(VertxTestContext testContext)  throws Exception{
 
         var user = registerTestUser();
         user.subscribe();
 
+
+        Thread.sleep(2000);
 
         var res = mongoService.getUser("test");
         res.subscribe(
@@ -63,10 +65,12 @@ public class MongoServiceIntegrationTest {
 
 
     @Test
-    public void updateUserTest(VertxTestContext testContext) {
+    public void updateUserTest(VertxTestContext testContext) throws Exception{
 
         var user = registerTestUser();
         user.subscribe();
+
+        Thread.sleep(2000);
 
         var upd = new JsonObject();
         upd.put(EMAIL_FIELD,"emailUpdate");
@@ -78,10 +82,12 @@ public class MongoServiceIntegrationTest {
     }
 
     @Test
-    public void getDeviceIdTest(VertxTestContext testContext) {
+    public void getDeviceIdTest(VertxTestContext testContext) throws Exception {
 
         var user = registerTestUser();
         user.subscribe();
+
+        Thread.sleep(2000);
 
         var res = mongoService.getUser("test");
         res.subscribe(
@@ -93,10 +99,12 @@ public class MongoServiceIntegrationTest {
     }
 
     @Test
-    public void authenticateUserTest(VertxTestContext testContext) {
+    public void authenticateUserTest(VertxTestContext testContext) throws Exception {
 
         var user = registerTestUser();
         user.subscribe();
+
+        Thread.sleep(2000);
 
         var usr = new JsonObject();
         usr.put(USERNAME_FIELD,"test");

@@ -21,7 +21,9 @@ import static org.abondar.experimental.delivery.userservice.util.MongoUtil.DATAB
 import static org.abondar.experimental.delivery.userservice.util.MongoUtil.ID;
 import static org.abondar.experimental.delivery.userservice.util.MongoUtil.INDEX_ERROR;
 import static org.abondar.experimental.delivery.userservice.util.MongoUtil.MONGO_HOST;
+import static org.abondar.experimental.delivery.userservice.util.MongoUtil.MONGO_PASS;
 import static org.abondar.experimental.delivery.userservice.util.MongoUtil.MONGO_PORT;
+import static org.abondar.experimental.delivery.userservice.util.MongoUtil.MONGO_USER;
 import static org.abondar.experimental.delivery.userservice.util.MongoUtil.SET;
 import static org.abondar.experimental.delivery.userservice.util.MongoUtil.USER_COLLECTION;
 
@@ -34,8 +36,8 @@ public class MongoServiceImpl implements MongoService {
         var config = new JsonObject();
         config.put("host", MONGO_HOST);
         config.put("port", MONGO_PORT);
-        config.put("username","admin");
-        config.put("password","admin123");
+        config.put("username",MONGO_USER);
+        config.put("password",MONGO_PASS);
 
         config.put("db_name", DATABASE_NAME);
 
