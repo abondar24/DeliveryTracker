@@ -17,12 +17,11 @@ import static org.abondar.experimental.delivery.userservice.util.ApiUtil.USERNAM
 
 public class UserServiceVerticle extends AbstractVerticle {
 
-    private static final Logger logger = LoggerFactory.getLogger(UserServiceVerticle.class);
 
-    private final MongoService mongoService;
+    private MongoService mongoService;
 
     public UserServiceVerticle(){
-        this.mongoService = new MongoServiceImpl(vertx);
+
     }
 
     public UserServiceVerticle(MongoService mongoService) {
@@ -32,6 +31,10 @@ public class UserServiceVerticle extends AbstractVerticle {
     @Override
     public Completable rxStart() {
         var router = Router.router(vertx);
+
+        if (mongoService==null){
+            mongoService = new MongoServiceImpl(vertx);
+        }
 
         var handler = new ApiHandler(mongoService);
 
