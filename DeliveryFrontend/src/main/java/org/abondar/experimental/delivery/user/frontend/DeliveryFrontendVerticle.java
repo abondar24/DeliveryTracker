@@ -19,7 +19,7 @@ public class DeliveryFrontendVerticle extends AbstractVerticle {
 
         router.route()
                 .handler(StaticHandler.create("webroot/assets"));
-        router.get("/")
+        router.get("/*")
                 .handler(ctx -> ctx.reroute("/index.html"));
 
         return vertx.createHttpServer()
