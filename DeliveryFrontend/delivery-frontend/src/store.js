@@ -1,6 +1,7 @@
 export default {
 
     setToken(value){
+        console.log(value)
         localStorage.setItem("token",value)
     },
 

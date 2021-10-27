@@ -51,7 +51,7 @@ export default {
         this.$router.push({name: 'home'})
       })
       .catch(err => this.notification=err.message)
-    }
+     }
   }
 }
 </script>
