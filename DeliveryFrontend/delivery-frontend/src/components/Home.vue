@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="alert alert-danger" role=alert v-if="notification.length >0">
+    <div class="alert alert-danger" role="alert" v-if="notification.length >0">
       {{ notification }}
     </div>
     <div class="float-right">
@@ -31,7 +31,7 @@
     </div>
     <div class="mt-5">
       <h5>Update user details</h5>
-      <form v-on:submit="sendUpdate">
+      <form @submit.prevent="sendUpdate">
         <div class="form-group">
           <label for="email">Email</label>
           <input type="email" class="form-control" id="email" placeholder="demo@mail.me" v-model="email">

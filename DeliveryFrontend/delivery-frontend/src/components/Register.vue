@@ -1,9 +1,9 @@
 <template>
   <div>
-    <div class="alert alert-danger" role=alert v-if="notification.length >0">
+    <div class="alert alert-danger" role="alert" v-if="notification.length >0">
       {{ notification }}
     </div>
-    <form v-on:submit="submit">
+    <form @submit.prevent="submit">
       <div class="form-group">
         <label for="username">Username</label>
         <input type="username" class="form-control" id="username" placeholder="admin123" v-model="username">
@@ -55,8 +55,8 @@ export default {
         garage: this.garage
       }
 
-      axios.post(`http://localhost:8000/api/v1/register`,payload)
-          .then(() => this.$router.push('/'))
+      axios.post(`http://localhost:8000/api/v1/register`, payload)
+          .then(() => this.$router.push({name: 'home'}))
           .catch(err => this.notification = err.message)
     }
   }

@@ -5,7 +5,7 @@ public enum Headers {
       ACCESS_CONTROL("Access-Control-Allow-Origin"),
       ORIGIN("origin"),
       CONTENT_TYPE("Content-Type"),
-      ACCEPT("accept"),
+      ACCEPT("Accept"),
       JSON("application/json"),
       JWT("application/jwt"),
       AUTH("Authorization");
