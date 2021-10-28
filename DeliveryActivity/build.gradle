@@ -1,0 +1,27 @@
+plugins {
+    id "org.flywaydb.flyway" version "8.0.2"
+}
+
+group 'org.abondar.experimental.delivery.activity'
+version '1.0-SNAPSHOT'
+
+mainClassName = "org.abondar.experimental.delivery.activity.Main"
+
+
+dependencies {
+    implementation("io.vertx:vertx-pg-client:$vertxVersion")
+    implementation ("org.postgresql:postgresql:$pgVersion")
+
+}
+
+flywayMigrate {
+    url = 'jdbc:postgresql://localhost:5432/delivery'
+    user = 'admin'
+    password = 'admin217'
+}
+
+flywayClean {
+    url = 'jdbc:postgresql://localhost:5432/delivery'
+    user = 'admin'
+    password = 'admin217'
+}

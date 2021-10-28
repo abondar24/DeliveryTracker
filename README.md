@@ -12,7 +12,7 @@ The service is split into several microservices
 3. [Ingester](DeliveryIngester/README.md)
 4. [Notificator](DeliveryNotificator/README.md)
 5. [User Service](DeliveryUserService/README.md)
-
+6. [Activity Service](DeliveryActivity/README.md)
 ## Build and Run 
 
 ```yaml
