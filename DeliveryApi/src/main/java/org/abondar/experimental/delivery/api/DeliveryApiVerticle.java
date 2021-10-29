@@ -15,16 +15,13 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 
 import static org.abondar.experimental.delivery.api.util.ApiUtil.API_PORT;
-import static org.abondar.experimental.delivery.api.util.ApiUtil.API_PREFIX;
 import static org.abondar.experimental.delivery.api.util.ApiUtil.CURRENT_ENDPOINT;
-import static org.abondar.experimental.delivery.api.util.ApiUtil.DAY_PARAM;
-import static org.abondar.experimental.delivery.api.util.ApiUtil.MONTH_PARAM;
-import static org.abondar.experimental.delivery.api.util.ApiUtil.PARAM_DELIM;
+import static org.abondar.experimental.delivery.api.util.ApiUtil.DAY_ENDPOINT;
+import static org.abondar.experimental.delivery.api.util.ApiUtil.MONTH_ENDPOINT;
 import static org.abondar.experimental.delivery.api.util.ApiUtil.REGISTER_ENDPOINT;
 import static org.abondar.experimental.delivery.api.util.ApiUtil.TOKEN_ENDPOINT;
-import static org.abondar.experimental.delivery.api.util.ApiUtil.USERNAME_PARAM;
+import static org.abondar.experimental.delivery.api.util.ApiUtil.USER_ENDPOINT;
 import static org.abondar.experimental.delivery.api.util.ApiUtil.USER_TOTAL_ENDPOINT;
-import static org.abondar.experimental.delivery.api.util.ApiUtil.YEAR_PARAM;
 
 
 public class DeliveryApiVerticle extends AbstractVerticle {
@@ -54,44 +51,42 @@ public class DeliveryApiVerticle extends AbstractVerticle {
         router.post().handler(handler.bodyHandler());
         router.put().handler(handler.bodyHandler());
 
-        router.post(API_PREFIX + REGISTER_ENDPOINT)
+        router.post(REGISTER_ENDPOINT)
                 .handler(rc -> handler.registerHandler(rc, webClient));
 
-        router.post(API_PREFIX+TOKEN_ENDPOINT)
-                .handler(rc -> handler.tokenHandler(rc,webClient,auth));
+        router.post(TOKEN_ENDPOINT)
+                .handler(rc -> handler.tokenHandler(rc, webClient, auth));
 
         var jwtHandler = handler.jwtHandler(auth);
-        router.get(API_PREFIX+ PARAM_DELIM +USERNAME_PARAM)
+        router.get(USER_ENDPOINT)
                 .handler(jwtHandler)
                 .handler(handler::checkUserHandler)
-                .handler(rc-> handler.fetchUserHandler(rc,webClient));
+                .handler(rc -> handler.fetchUserHandler(rc, webClient));
 
-        router.put(API_PREFIX+ PARAM_DELIM +USERNAME_PARAM)
+        router.put(USER_ENDPOINT)
                 .handler(jwtHandler)
                 .handler(handler::checkUserHandler)
-                .handler(rc-> handler.updateUserHandler(rc,webClient));
+                .handler(rc -> handler.updateUserHandler(rc, webClient));
 
-        router.get(API_PREFIX+ PARAM_DELIM +USERNAME_PARAM+USER_TOTAL_ENDPOINT)
+        router.get(USER_TOTAL_ENDPOINT)
                 .handler(jwtHandler)
                 .handler(handler::checkUserHandler)
-                .handler(rc-> handler.totalHandler(rc,webClient));
+                .handler(rc -> handler.totalHandler(rc, webClient));
 
-        router.get(API_PREFIX+ PARAM_DELIM +USERNAME_PARAM+
-                        PARAM_DELIM +YEAR_PARAM+ PARAM_DELIM +MONTH_PARAM)
+        router.get(MONTH_ENDPOINT)
                 .handler(jwtHandler)
                 .handler(handler::checkUserHandler)
-                .handler(rc-> handler.monthHandler(rc,webClient));
+                .handler(rc -> handler.monthHandler(rc, webClient));
 
-        router.get(API_PREFIX+ PARAM_DELIM +USERNAME_PARAM+
-                        PARAM_DELIM +YEAR_PARAM + PARAM_DELIM +MONTH_PARAM+ PARAM_DELIM +DAY_PARAM)
+        router.get(DAY_ENDPOINT)
                 .handler(jwtHandler)
                 .handler(handler::checkUserHandler)
-                .handler(rc-> handler.dayHandler(rc,webClient));
+                .handler(rc -> handler.dayHandler(rc, webClient));
 
-        router.get(API_PREFIX+PARAM_DELIM+USERNAME_PARAM+CURRENT_ENDPOINT)
+        router.get(CURRENT_ENDPOINT)
                 .handler(jwtHandler)
                 .handler(handler::checkUserHandler)
-                .handler(rc-> handler.currentDeliveryHandler(rc,webClient));
+                .handler(rc -> handler.currentDeliveryHandler(rc, webClient));
 
         return router;
     }

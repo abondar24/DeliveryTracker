@@ -35,8 +35,7 @@ public class DeliveryApiTest {
     public static void prepare(Vertx vertx) throws Exception {
         spec = new RequestSpecBuilder()
                 .addFilters(List.of(new ResponseLoggingFilter(), new RequestLoggingFilter()))
-                .setBaseUri("http://localhost:8000/")
-                .setBasePath("/api/v1")
+                .setBaseUri("http://localhost:8000")
                 .build();
         mockUserServer = new MockWebServer();
 
@@ -80,12 +79,12 @@ public class DeliveryApiTest {
 
                 var body = new JsonObject();
 
-                if (request.getPath().contains(ApiUtil.USER_TOTAL_ENDPOINT)){
+                if (request.getPath().contains("/total")){
                     body.put("delivered", "123");
                     body.put("distance","456");
                 }
 
-                if (request.getPath().contains(ApiUtil.CURRENT_ENDPOINT)){
+                if (request.getPath().contains("/current")){
                     body.put("delivery", "delivery123");
                     body.put("description","description");
                 }
@@ -176,7 +175,7 @@ public class DeliveryApiTest {
         given(spec)
                 .contentType(ContentType.JSON)
                 .headers("Authorization", "Bearer " + jwt)
-                .get("/test")
+                .get(ApiUtil.API_PREFIX+"/test")
                 .then()
                 .assertThat()
                 .statusCode(200);
@@ -208,7 +207,7 @@ public class DeliveryApiTest {
                 .contentType(ContentType.JSON)
                 .headers("Authorization", "Bearer " + jwt)
                 .body(updateJson.toString())
-                .put("/test")
+                .put(ApiUtil.API_PREFIX+"/test")
                 .then()
                 .assertThat()
                 .statusCode(200);
@@ -231,7 +230,7 @@ public class DeliveryApiTest {
         given(spec)
                 .contentType(ContentType.JSON)
                 .headers("Authorization", "Bearer " + jwt)
-                .get("/test"+ApiUtil.USER_TOTAL_ENDPOINT)
+                .get(ApiUtil.API_PREFIX+"/test/total")
                 .then()
                 .assertThat()
                 .statusCode(200);
@@ -254,7 +253,7 @@ public class DeliveryApiTest {
         given(spec)
                 .contentType(ContentType.JSON)
                 .headers("Authorization", "Bearer " + jwt)
-                .get("/test/2020/06")
+                .get(ApiUtil.API_PREFIX+"/test/2020/06")
                 .then()
                 .assertThat()
                 .statusCode(200);
@@ -277,7 +276,7 @@ public class DeliveryApiTest {
         given(spec)
                 .contentType(ContentType.JSON)
                 .headers("Authorization", "Bearer " + jwt)
-                .get("/test/2020/06/14")
+                .get(ApiUtil.API_PREFIX+"/test/2020/06/14")
                 .then()
                 .assertThat()
                 .statusCode(200);
@@ -300,7 +299,7 @@ public class DeliveryApiTest {
         given(spec)
                 .contentType(ContentType.JSON)
                 .headers("Authorization", "Bearer " + jwt)
-                .get("/test"+ApiUtil.CURRENT_ENDPOINT)
+                .get(ApiUtil.API_PREFIX+"/test/current")
                 .then()
                 .and()
                 .assertThat()
