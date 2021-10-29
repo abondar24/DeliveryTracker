@@ -8,7 +8,6 @@ import io.vertx.reactivex.kafka.client.consumer.KafkaConsumer;
 import org.abondar.experimental.delivery.ingester.util.IngesterUtil;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import static org.abondar.experimental.delivery.ingester.util.IngesterUtil.KAFKA_PORT;
@@ -34,7 +33,7 @@ public class IngesterIntegrationTest {
         message.put(IngesterUtil.DISTANCE_FIELD, 24);
         message.put(IngesterUtil.DELIVERED_DAILY_FIELD, 7);
         message.put(IngesterUtil.CURRENT_DESCRIPTION_FIELD, "curr");
-        message.put(IngesterUtil.CURRENT_DELIVERY_FIELD, "curId");
+        message.put(IngesterUtil.DELIVERY_ID_FIELD, "curId");
 
         return message;
     };

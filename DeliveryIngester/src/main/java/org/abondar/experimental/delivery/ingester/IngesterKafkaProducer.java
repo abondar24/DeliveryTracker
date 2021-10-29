@@ -7,7 +7,7 @@ import io.vertx.reactivex.kafka.client.producer.KafkaProducerRecord;
 
 import java.util.Map;
 
-import static org.abondar.experimental.delivery.ingester.util.IngesterUtil.CURRENT_DELIVERY_FIELD;
+import static org.abondar.experimental.delivery.ingester.util.IngesterUtil.DELIVERY_ID_FIELD;
 import static org.abondar.experimental.delivery.ingester.util.IngesterUtil.CURRENT_DESCRIPTION_FIELD;
 import static org.abondar.experimental.delivery.ingester.util.IngesterUtil.DEVICE_ID_FIELD;
 import static org.abondar.experimental.delivery.ingester.util.IngesterUtil.DISTANCE_FIELD;
@@ -39,7 +39,7 @@ public class IngesterKafkaProducer {
 
         recordData.put(DEVICE_ID_FIELD, deviceId);
         recordData.put(DISTANCE_FIELD, payload.getString(DISTANCE_FIELD));
-        recordData.put(CURRENT_DELIVERY_FIELD, payload.getString(CURRENT_DELIVERY_FIELD));
+        recordData.put(DELIVERY_ID_FIELD, payload.getString(DELIVERY_ID_FIELD));
         recordData.put(CURRENT_DESCRIPTION_FIELD, payload.getString(CURRENT_DESCRIPTION_FIELD));
 
         return KafkaProducerRecord.create(KAFKA_TOPIC, deviceId, recordData);

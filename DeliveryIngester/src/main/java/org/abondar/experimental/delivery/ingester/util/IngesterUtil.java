@@ -24,10 +24,9 @@ public class IngesterUtil {
 
     public static final String DEVICE_SYNC_FIELD = "deviceSync";
 
-
     public static final String DISTANCE_FIELD = "distance";
 
-    public static final String CURRENT_DELIVERY_FIELD = "currentDelivery";
+    public static final String DELIVERY_ID_FIELD = "deliveryId";
 
     public static final String CURRENT_DESCRIPTION_FIELD = "currentDescription";
 
