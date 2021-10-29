@@ -6,7 +6,7 @@ import org.abondar.experimental.delivery.activity.verticle.EventVerticle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static org.abondar.experimental.delivery.activity.util.ActivityUtil.SERVER_PORT;
+import static org.abondar.experimental.delivery.activity.util.ActivityApiUtil.SERVER_PORT;
 
 public class Main {
 

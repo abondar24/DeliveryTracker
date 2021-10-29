@@ -10,12 +10,12 @@ import io.vertx.reactivex.sqlclient.Tuple;
 
 import java.time.LocalDateTime;
 
-import static org.abondar.experimental.delivery.activity.util.ActivityUtil.DESCRIPTION_FIELD;
-import static org.abondar.experimental.delivery.activity.util.ActivityUtil.DELIVERED_FIELD;
-import static org.abondar.experimental.delivery.activity.util.ActivityUtil.DEVICE_ID_FIELD;
-import static org.abondar.experimental.delivery.activity.util.ActivityUtil.DEVICE_SYNC_FIELD;
-import static org.abondar.experimental.delivery.activity.util.ActivityUtil.DISTANCE_FIELD;
-import static org.abondar.experimental.delivery.activity.util.ActivityUtil.TIMESTAMP_FIELD;
+import static org.abondar.experimental.delivery.activity.util.ActivityApiUtil.DESCRIPTION_FIELD;
+import static org.abondar.experimental.delivery.activity.util.ActivityApiUtil.DELIVERED_FIELD;
+import static org.abondar.experimental.delivery.activity.util.ActivityApiUtil.DEVICE_ID_FIELD;
+import static org.abondar.experimental.delivery.activity.util.ActivityApiUtil.DEVICE_SYNC_FIELD;
+import static org.abondar.experimental.delivery.activity.util.ActivityApiUtil.DISTANCE_FIELD;
+import static org.abondar.experimental.delivery.activity.util.ActivityApiUtil.TIMESTAMP_FIELD;
 import static org.abondar.experimental.delivery.activity.util.SqlUtil.CURRENT_DELIVERY_QUERY;
 import static org.abondar.experimental.delivery.activity.util.SqlUtil.DAY_DELIVERIES_QUERY;
 import static org.abondar.experimental.delivery.activity.util.SqlUtil.DELIVERIES_TODAY_QUERY;
