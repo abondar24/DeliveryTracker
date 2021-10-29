@@ -148,7 +148,7 @@ public class Handler {
                 );
     }
 
-    public void totalKilometersHandler(RoutingContext ctx, WebClient webClient) {
+    public void totalHandler(RoutingContext ctx, WebClient webClient) {
         var deviceId = ctx.user()
                 .principal()
                 .getString(DEVICE_ID_PARAM);
@@ -162,7 +162,7 @@ public class Handler {
                 );
     }
 
-    public void monthKilometersHandler(RoutingContext ctx, WebClient webClient) {
+    public void monthHandler(RoutingContext ctx, WebClient webClient) {
         var deviceId = ctx.user()
                 .principal()
                 .getString(DEVICE_ID_PARAM);
@@ -180,7 +180,7 @@ public class Handler {
                 );
     }
 
-    public void dayKilometersHandler(RoutingContext ctx, WebClient webClient) {
+    public void dayHandler(RoutingContext ctx, WebClient webClient) {
         var deviceId = ctx.user()
                 .principal()
                 .getString(DEVICE_ID_PARAM);

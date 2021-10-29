@@ -74,19 +74,19 @@ public class DeliveryApiVerticle extends AbstractVerticle {
         router.get(API_PREFIX+ PARAM_DELIM +USERNAME_PARAM+USER_TOTAL_ENDPOINT)
                 .handler(jwtHandler)
                 .handler(handler::checkUserHandler)
-                .handler(rc-> handler.totalKilometersHandler(rc,webClient));
+                .handler(rc-> handler.totalHandler(rc,webClient));
 
         router.get(API_PREFIX+ PARAM_DELIM +USERNAME_PARAM+
                         PARAM_DELIM +YEAR_PARAM+ PARAM_DELIM +MONTH_PARAM)
                 .handler(jwtHandler)
                 .handler(handler::checkUserHandler)
-                .handler(rc-> handler.monthKilometersHandler(rc,webClient));
+                .handler(rc-> handler.monthHandler(rc,webClient));
 
         router.get(API_PREFIX+ PARAM_DELIM +USERNAME_PARAM+
                         PARAM_DELIM +YEAR_PARAM + PARAM_DELIM +MONTH_PARAM+ PARAM_DELIM +DAY_PARAM)
                 .handler(jwtHandler)
                 .handler(handler::checkUserHandler)
-                .handler(rc-> handler.dayKilometersHandler(rc,webClient));
+                .handler(rc-> handler.dayHandler(rc,webClient));
 
         router.get(API_PREFIX+PARAM_DELIM+USERNAME_PARAM+CURRENT_ENDPOINT)
                 .handler(jwtHandler)
