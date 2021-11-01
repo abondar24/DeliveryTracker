@@ -156,12 +156,15 @@ public class DbServiceIntegrationTest {
         Thread.sleep(2000);
 
         var res = service.getDistanceRanking();
-        res.map(rs->rs.iterator().next())
-                .subscribe(
-                row -> {
-                    var device = row.getString(0);
-                    var count = row.getInteger(1);
-                    var dist = row.getInteger(2);
+        res.subscribe(
+                rank -> {
+                    var size  = rank.size();
+                    assertEquals(1,size);
+
+                    var data = rank.getJsonObject(0);
+                    var device = data.getString(DEVICE_ID_FIELD);
+                    var count = data.getInteger(DELIVERED_FIELD);
+                    var dist = data.getInteger(DISTANCE_FIELD);
                     assertEquals("testId",device);
                     assertEquals(1,count);
                     assertEquals(2, dist);

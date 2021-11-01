@@ -10,6 +10,7 @@ mainClassName = "org.abondar.experimental.delivery.activity.Main"
 
 dependencies {
     implementation("io.vertx:vertx-pg-client:$vertxVersion")
+    implementation ("io.vertx:vertx-kafka-client:$vertxVersion")
     implementation ("org.postgresql:postgresql:$pgVersion")
 
 }

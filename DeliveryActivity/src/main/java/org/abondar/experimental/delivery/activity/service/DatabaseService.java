@@ -1,6 +1,7 @@
 package org.abondar.experimental.delivery.activity.service;
 
 import io.reactivex.Single;
+import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.reactivex.sqlclient.Row;
 import io.vertx.reactivex.sqlclient.RowSet;
@@ -17,7 +18,7 @@ public interface DatabaseService {
 
     Single<JsonObject> getCurrentDelivery();
 
-    Single<RowSet<Row>> getDistanceRanking();
+    Single<JsonArray> getDistanceRanking();
 
     Single<JsonObject> getTodayUpdate(String deviceId);
 }

@@ -1,6 +1,7 @@
 package org.abondar.experimental.delivery.activity.service;
 
 import io.reactivex.Single;
+import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.reactivex.pgclient.PgPool;
 import io.vertx.reactivex.sqlclient.Row;
@@ -123,9 +124,20 @@ public class DatabaseServiceImpl implements DatabaseService {
     }
 
     @Override
-    public Single<RowSet<Row>> getDistanceRanking() {
+    public Single<JsonArray> getDistanceRanking() {
         return pgPool.preparedQuery(DISTANCE_RANKING_QUERY)
-                .rxExecute();
+                .rxExecute()
+                .map(rs->{
+                    var rank = new JsonArray();
+                    rs.forEach(row -> {
+                        var rowJson = new JsonObject();
+                        rowJson.put(DEVICE_ID_FIELD,row.getString(0));
+                        rowJson.put(DELIVERED_FIELD,row.getInteger(1));
+                        rowJson.put(DISTANCE_FIELD,row.getInteger(2));
+                        rank.add(rowJson);
+                    });
+                    return rank;
+                });
     }
 
     @Override
