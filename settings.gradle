@@ -5,4 +5,5 @@ include 'DeliveryIngester'
 include 'DeliveryNotificator'
 include 'DeliveryUserService'
 include 'DeliveryActivity'
+include 'DeliveryStatService'
 

@@ -9,3 +9,5 @@ delivery-notificator: java -jar DeliveryNotificator/build/libs/DeliveryNotificat
 delivery-user-service: java -jar DeliveryUserService/build/libs/DeliveryUserService-1.0-SNAPSHOT-all.jar
 
 delivery-activity: java -jar DeliveryActivity/build/libs/DeliveryActivity-1.0-SNAPSHOT-all.jar
+
+delivery-stat-service: java -jar DeliveryStatService/build/libs/DeliveryStatService-1.0-SNAPSHOT-all.jar
