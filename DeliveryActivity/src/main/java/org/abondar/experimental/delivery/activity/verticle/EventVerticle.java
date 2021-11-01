@@ -38,16 +38,11 @@ public class EventVerticle extends AbstractVerticle {
     public EventVerticle() {
     }
 
-    public EventVerticle(DatabaseService databaseService) {
-        this.databaseService = databaseService;
-    }
 
     @Override
     public Completable rxStart() {
-        if (databaseService == null) {
-            var pool = PgPool.pool(vertx, PG_OPTS, new PoolOptions());
-            databaseService = new DatabaseServiceImpl(pool);
-        }
+        var pool = PgPool.pool(vertx, PG_OPTS, new PoolOptions());
+        databaseService = new DatabaseServiceImpl(pool);
 
         consumer = KafkaConsumer.create(vertx, CONSUMER_CONFIG);
 
@@ -56,6 +51,7 @@ public class EventVerticle extends AbstractVerticle {
                 .flatMap(this::insertRecord)
                 .flatMap(this::getActivityUpdate)
                 .flatMap(this::commitKafkaConsumerOffset)
+                .doOnError(err -> logger.error("Error", err))
                 .retryWhen(this::retry)
                 .subscribe();
 

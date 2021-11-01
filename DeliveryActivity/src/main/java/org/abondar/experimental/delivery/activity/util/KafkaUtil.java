@@ -25,7 +25,9 @@ public class KafkaUtil {
             "bootstrap.servers",KAFKA_HOST+":"+KAFKA_PORT,
             "key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer",
             "value.deserializer", "io.vertx.kafka.client.serialization.JsonObjectDeserializer",
-            "auto.offset.reset", "earliest"
+            "auto.offset.reset", "earliest",
+            "enable.auto.commit", "true",
+            "group.id","activity"
     );
 
 }
