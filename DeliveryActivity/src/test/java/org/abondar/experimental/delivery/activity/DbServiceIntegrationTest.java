@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.Calendar;
 
@@ -27,6 +28,7 @@ import static org.abondar.experimental.delivery.activity.util.ActivityApiUtil.DI
 import static org.abondar.experimental.delivery.activity.util.ActivityApiUtil.TIMESTAMP_FIELD;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ExtendWith({VertxExtension.class})
 public class DbServiceIntegrationTest {
@@ -88,6 +90,20 @@ public class DbServiceIntegrationTest {
         );
     }
 
+
+    @Test
+    public void getDailyDeliveriesWrongDateTest() {
+        assertThrows(DateTimeException.class,()-> service.getDayDeliveries("testId", "2021", "19", "21")
+                .subscribe());
+
+    }
+
+    @Test
+    public void getDailyDeliveriesNotNumberDayTest() {
+        assertThrows(NumberFormatException.class,()-> service.getDayDeliveries("testId", "year", "19", "21")
+                .subscribe());
+
+    }
 
     @Test
     public void getMonthDeliveriesTest(VertxTestContext testContext) throws Exception {
