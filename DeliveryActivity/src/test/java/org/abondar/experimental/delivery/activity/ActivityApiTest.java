@@ -18,7 +18,7 @@ import static io.restassured.RestAssured.given;
 import static org.abondar.experimental.delivery.activity.util.ActivityApiUtil.DELIVERED_FIELD;
 import static org.abondar.experimental.delivery.activity.util.ActivityApiUtil.DEVICE_ID_FIELD;
 import static org.abondar.experimental.delivery.activity.util.ActivityApiUtil.DISTANCE_FIELD;
-import static org.abondar.experimental.delivery.activity.util.ActivityApiUtil.RANKING_ENDPOINT;
+import static org.abondar.experimental.delivery.activity.util.ActivityApiUtil.DISTANCE_RANKING_ENDPOINT;
 import static org.abondar.experimental.delivery.activity.util.ActivityApiUtil.SERVER_PORT;
 import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.is;
@@ -105,7 +105,7 @@ public class ActivityApiTest {
     public void getRankingTest() {
         given(spec)
                 .contentType(ContentType.JSON)
-                .get(RANKING_ENDPOINT)
+                .get(DISTANCE_RANKING_ENDPOINT)
                 .then()
                 .assertThat()
                 .statusCode(200)

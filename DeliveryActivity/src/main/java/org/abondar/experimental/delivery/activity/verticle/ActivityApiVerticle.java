@@ -11,7 +11,7 @@ import org.abondar.experimental.delivery.activity.util.DbUtil;
 
 import static org.abondar.experimental.delivery.activity.util.ActivityApiUtil.DAY_ENDPOINT;
 import static org.abondar.experimental.delivery.activity.util.ActivityApiUtil.MONTH_ENDPOINT;
-import static org.abondar.experimental.delivery.activity.util.ActivityApiUtil.RANKING_ENDPOINT;
+import static org.abondar.experimental.delivery.activity.util.ActivityApiUtil.DISTANCE_RANKING_ENDPOINT;
 import static org.abondar.experimental.delivery.activity.util.ActivityApiUtil.SERVER_PORT;
 import static org.abondar.experimental.delivery.activity.util.ActivityApiUtil.TOTAL_ENDPOINT;
 
@@ -38,7 +38,7 @@ public class ActivityApiVerticle extends AbstractVerticle {
         router.get(TOTAL_ENDPOINT).handler(handler::handleTotal);
         router.get(MONTH_ENDPOINT).handler(handler::handleMonth);
         router.get(DAY_ENDPOINT).handler(handler::handleDay);
-        router.get(RANKING_ENDPOINT).handler(handler::handleRanking);
+        router.get(DISTANCE_RANKING_ENDPOINT).handler(handler::handleRanking);
 
         return vertx.createHttpServer()
                 .requestHandler(router)

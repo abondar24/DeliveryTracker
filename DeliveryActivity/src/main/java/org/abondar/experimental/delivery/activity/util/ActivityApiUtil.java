@@ -15,7 +15,7 @@ public class ActivityApiUtil {
     public static final String YEAR_PARAM = "year";
     public static final String MONTH_PARAM = "month";
     public static final String DAY_PARAM = "day";
-    public static final String RANKING_ENDPOINT = "/day-distance-ranking";
+    public static final String DISTANCE_RANKING_ENDPOINT = "/day-distance-ranking";
     private static final String DEVICE_ID_PARAM = "/:" + DEVICE_ID_FIELD;
     public static final String TOTAL_ENDPOINT = DEVICE_ID_PARAM + "/total";
     private static final String YEAR_PATH_PARAM = "/:" + YEAR_PARAM;
