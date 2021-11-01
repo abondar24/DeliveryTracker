@@ -31,9 +31,7 @@ public class IngesterIntegrationTest {
         message.put(IngesterUtil.DEVICE_SYNC_FIELD, "sync");
         message.put(IngesterUtil.DEVICE_ID_FIELD, "id");
         message.put(IngesterUtil.DISTANCE_FIELD, 24);
-        message.put(IngesterUtil.DELIVERED_DAILY_FIELD, 7);
-        message.put(IngesterUtil.CURRENT_DESCRIPTION_FIELD, "curr");
-        message.put(IngesterUtil.DELIVERY_ID_FIELD, "curId");
+        message.put(IngesterUtil.DESCRIPTION_FIELD, "curr");
 
         return message;
     };

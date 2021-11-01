@@ -9,8 +9,7 @@ public class VerificationUtil {
          return !payload.containsKey(IngesterUtil.DEVICE_ID_FIELD) ||
          !payload.containsKey(IngesterUtil.DEVICE_SYNC_FIELD) ||
          !payload.containsKey(IngesterUtil.DISTANCE_FIELD)  ||
-         !payload.containsKey(IngesterUtil.DELIVERY_ID_FIELD) ||
-         !payload.containsKey(IngesterUtil.CURRENT_DESCRIPTION_FIELD);
+         !payload.containsKey(IngesterUtil.DESCRIPTION_FIELD);
     }
 
 }

@@ -26,9 +26,8 @@ public class IngesterUtil {
 
     public static final String DISTANCE_FIELD = "distance";
 
-    public static final String DELIVERY_ID_FIELD = "deliveryId";
 
-    public static final String CURRENT_DESCRIPTION_FIELD = "currentDescription";
+    public static final String DESCRIPTION_FIELD = "currentDescription";
 
 
 
