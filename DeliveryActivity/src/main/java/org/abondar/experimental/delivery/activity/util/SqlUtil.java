@@ -4,11 +4,11 @@ public class SqlUtil {
 
     private SqlUtil(){};
 
-    public static final String INSERT_QUERY = "INSERT INTO delivery VALUES($1,$2,current_timestamp,$3,$4,$5)";
+    public static final String INSERT_QUERY = "INSERT INTO delivery VALUES($1,$2,current_timestamp,$3,$4)";
 
-    public static final String DELIVERIES_TODAY_QUERY = "SELECT current_timestamp, count(*)" +
+    public static final String DELIVERIES_UPDATE_TODAY_QUERY = "SELECT current_timestamp, count(*)" +
             ",coalesce(sum(distance),0) FROM delivery WHERE (device_id=$1) AND " +
-            "(date_trunc('day',sync_timestamp)=date_trunc('day'),current_timestamp))";
+            "(date_trunc('day',sync_timestamp)=date_trunc('day',current_timestamp))";
 
     public static final String TOTAL_DELIVERIES_QUERY = "SELECT count(*),sum(distance) FROM delivery WHERE (device_id=$1)";
 

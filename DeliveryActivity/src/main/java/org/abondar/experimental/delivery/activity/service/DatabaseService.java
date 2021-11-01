@@ -7,17 +7,17 @@ import io.vertx.reactivex.sqlclient.RowSet;
 
 public interface DatabaseService {
 
-    Single<Row> insertDelivery(JsonObject data);
+    Single<RowSet<Row>> insertDelivery(JsonObject data);
 
-    Single<Row> getDailyDeliveries(String deviceId,String year,String month,String day);
+    Single<JsonObject> getDayDeliveries(String deviceId, String year, String month, String day);
 
-    Single<Row> getMonthDeliveries(String deviceId,String year,String month);
+    Single<JsonObject> getMonthDeliveries(String deviceId,String year,String month);
 
-    Single<Row> getTotalDeliveries(String deviceId);
+    Single<JsonObject> getTotalDeliveries(String deviceId);
 
-    Single<Row> getCurrentDelivery(String deviceId);
+    Single<JsonObject> getCurrentDelivery();
 
     Single<RowSet<Row>> getDistanceRanking();
 
-    Single<JsonObject> getTodayDeliveries(String deviceId);
+    Single<JsonObject> getTodayUpdate(String deviceId);
 }

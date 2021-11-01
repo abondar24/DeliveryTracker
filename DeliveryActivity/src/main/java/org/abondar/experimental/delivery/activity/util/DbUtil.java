@@ -14,7 +14,7 @@ public class DbUtil {
 
     private static final String DATABASE_PASSWORD = "admin217";
 
-    public static final PgConnectOptions pgConnectOptions = new PgConnectOptions()
+    public static final PgConnectOptions PG_OPTS = new PgConnectOptions()
             .setHost(DATABASE_HOST)
             .setDatabase(DATABASE)
             .setUser(DATABASE_USER)
