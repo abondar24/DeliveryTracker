@@ -20,10 +20,9 @@ public class ActivityApiUtil {
     public static final String TOTAL_ENDPOINT = DEVICE_ID_PARAM + "/total";
     private static final String YEAR_PATH_PARAM = "/:" + YEAR_PARAM;
     private static final String MONTH_PATH_PARAM = "/:" + MONTH_PARAM;
+    public static final String MONTH_ENDPOINT = DEVICE_ID_PARAM + YEAR_PATH_PARAM + MONTH_PATH_PARAM;
     private static final String DAY_PATH_PARAM = "/:" + DAY_PARAM;
-    public static final String MONTH_ENDPOINT = DAY_PATH_PARAM + YEAR_PATH_PARAM + MONTH_PATH_PARAM;
-
-    public static final String DAY_ENDPOINT = MONTH_ENDPOINT + DAY_PATH_PARAM;
+    public static final String DAY_ENDPOINT = DEVICE_ID_PARAM + YEAR_PATH_PARAM + MONTH_PATH_PARAM + DAY_PATH_PARAM;
 
     private ActivityApiUtil() {
     }

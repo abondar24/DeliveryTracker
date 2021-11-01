@@ -7,6 +7,7 @@ import io.vertx.reactivex.sqlclient.Row;
 import io.vertx.reactivex.sqlclient.RowSet;
 import org.abondar.experimental.delivery.activity.service.DatabaseService;
 
+import java.time.DateTimeException;
 import java.time.LocalDateTime;
 
 import static org.abondar.experimental.delivery.activity.util.ActivityApiUtil.DELIVERED_FIELD;
@@ -32,7 +33,11 @@ public class DatabaseTestServiceImpl implements DatabaseService {
     }
 
     @Override
-    public Single<JsonObject> getMonthDeliveries(String deviceId, String year, String month) {
+    public Single<JsonObject> getMonthDeliveries(String deviceId, String year, String month) throws DateTimeException {
+        var monthVal = Integer.parseInt(month);
+        if (monthVal>12){
+            throw new DateTimeException("Wrong month");
+        }
         var data = new JsonObject();
         data.put(DELIVERED_FIELD, 2);
         data.put(DISTANCE_FIELD, 4);

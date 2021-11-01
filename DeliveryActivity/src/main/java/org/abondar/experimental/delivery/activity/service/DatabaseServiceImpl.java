@@ -49,7 +49,7 @@ public class DatabaseServiceImpl implements DatabaseService {
     }
 
     @Override
-    public Single<JsonObject> getDayDeliveries(String deviceId, String year, String month, String day) throws DateTimeException,NumberFormatException {
+    public Single<JsonObject> getDayDeliveries(String deviceId, String year, String month, String day){
         var dateTime = LocalDateTime.of(Integer.parseInt(year),
                 Integer.parseInt(month),
                 Integer.parseInt(day), 0, 0);
@@ -60,7 +60,7 @@ public class DatabaseServiceImpl implements DatabaseService {
     }
 
     @Override
-    public Single<JsonObject> getMonthDeliveries(String deviceId, String year, String month) throws DateTimeException,NumberFormatException{
+    public Single<JsonObject> getMonthDeliveries(String deviceId, String year, String month){
         var dateTime = LocalDateTime.of(Integer.parseInt(year),
                 Integer.parseInt(month), 1, 0, 0);
 
@@ -70,7 +70,7 @@ public class DatabaseServiceImpl implements DatabaseService {
     }
 
     @Override
-    public Single<JsonObject> getTotalDeliveries(String deviceId) throws DateTimeException,NumberFormatException {
+    public Single<JsonObject> getTotalDeliveries(String deviceId){
         var param = Tuple.of(deviceId);
 
         return getStat(TOTAL_DELIVERIES_QUERY, param);
