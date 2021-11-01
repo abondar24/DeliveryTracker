@@ -7,11 +7,12 @@ public class NotificatorUtil {
     public static final String SERVER_HOST = "localhost";
     public static final int KAFKA_PORT = 9092;
     public static final String KAFKA_TOPIC = "delivery.updates";
-    public static final Map<String, String> KAFKA_CONFIG = Map.of("" +
-                    "bootstrap.servers", SERVER_HOST + ":" + KAFKA_PORT,
+    public static final Map<String, String> KAFKA_CONFIG = Map.of("bootstrap.servers", SERVER_HOST + ":" + KAFKA_PORT,
             "key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer",
             "value.deserializer", "io.vertx.kafka.client.serialization.JsonObjectDeserializer",
-            "auto.offset.reset", "earliest");
+            "auto.offset.reset", "earliest",
+            "enable.auto.commit", "true",
+            "group.id","notificator");
     public static final int EMAIL_PORT = 1025;
     public static final int USER_SERVICE_PORT = 5000;
     public static final String DEVICE_ENDPOINT = "/device";

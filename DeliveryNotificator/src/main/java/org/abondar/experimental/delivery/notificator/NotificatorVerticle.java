@@ -42,7 +42,7 @@ public class NotificatorVerticle extends AbstractVerticle {
                 .flatMapSingle(record -> sender.sendEmail(record, true))
                 .doOnError(err -> logger.error("Error: ", err))
                 .retryWhen(this::retry)
-                .subscribe(mailResult -> logger.info("Email sent:", mailResult.getRecipients()));
+                .subscribe(mailResult -> logger.info("Email sent: {}", mailResult.getRecipients()));
 
 
         conn.connect();
@@ -52,7 +52,7 @@ public class NotificatorVerticle extends AbstractVerticle {
                 .flatMapSingle(record -> sender.sendEmail(record, false))
                 .doOnError(err -> logger.error("Error: ", err))
                 .retryWhen(this::retry)
-                .subscribe(mailResult -> logger.info("Email sent:", mailResult.getRecipients()));
+                .subscribe(mailResult -> logger.info("Email sent: {}", mailResult.getRecipients()));
 
 
         return Completable.complete();

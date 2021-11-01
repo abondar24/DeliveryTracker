@@ -70,7 +70,7 @@ public class NotificationSender {
         var text = "";
 
         if (positive){
-            text = String.format("You have delivered %d with distance %d. Greate work!\n",delivered,distance);
+            text = String.format("You have delivered %d with distance %d. Great work!\n",delivered,distance);
         } else {
             text = String.format("You have delivered %d with distance %d. Work harder!\n",delivered,distance);
         }
