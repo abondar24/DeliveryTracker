@@ -53,5 +53,5 @@ http://localhost:6000 - server
 ../gradlew clean build
 ../gradlew flywayMigrate
 
-java -jar DeliveryActivity/build/libs/DeliveryActivity-1.0-SNAPSHOT-all.jar
+java -jar build/libs/DeliveryActivity-1.0-SNAPSHOT-all.jar
 ```
