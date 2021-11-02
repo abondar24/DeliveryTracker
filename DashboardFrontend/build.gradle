@@ -1,0 +1,37 @@
+plugins {
+    id 'com.github.node-gradle.node' version '3.1.0'
+}
+
+group 'org.abondar.experimental.delivery.dashboard'
+version '1.0-SNAPSHOT'
+
+mainClassName = "org.abondar.experimental.delivery.dashboard.Main"
+
+
+dependencies {
+    implementation("io.vertx:vertx-web-client:$vertxVersion")
+}
+
+
+node{
+    nodeProjectDir = file("${projectDir}/dashboard")
+
+}
+
+task buildFrontend(type: NpmTask) {
+    args = ["run","build"]
+}
+
+tasks.register('copyDist', Copy){
+    dependsOn("buildFrontend")
+    from "$projectDir/dashboard/dist"
+    into "$projectDir/src/main/resources/webroot/assets"
+
+}
+
+processResources.dependsOn copyDist
+
+clean{
+    delete("$node.npmWorkDir/dist")
+    delete("$projectDir/src/main/resources/webroot")
+}
