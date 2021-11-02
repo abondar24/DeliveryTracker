@@ -80,8 +80,8 @@ public class DeliveryApiTest {
                 var body = new JsonObject();
 
                 if (request.getPath().contains("/total")){
-                    body.put("delivered", "123");
-                    body.put("distance","456");
+                    body.put("delivered", 123);
+                    body.put("distance",456);
                 }
 
                 if (request.getPath().contains("/current")){

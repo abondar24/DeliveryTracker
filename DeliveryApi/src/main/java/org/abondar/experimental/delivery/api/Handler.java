@@ -1,9 +1,15 @@
 package org.abondar.experimental.delivery.api;
 
+import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
 import io.reactivex.Single;
+import io.vertx.circuitbreaker.OpenCircuitException;
+import io.vertx.core.TimeoutStream;
 import io.vertx.core.http.HttpMethod;
+import io.vertx.core.impl.NoStackTraceThrowable;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.auth.JWTOptions;
+import io.vertx.reactivex.circuitbreaker.CircuitBreaker;
 import io.vertx.reactivex.ext.auth.jwt.JWTAuth;
 import io.vertx.reactivex.ext.web.RoutingContext;
 import io.vertx.reactivex.ext.web.client.HttpResponse;
@@ -13,7 +19,6 @@ import io.vertx.reactivex.ext.web.codec.BodyCodec;
 import io.vertx.reactivex.ext.web.handler.BodyHandler;
 import io.vertx.reactivex.ext.web.handler.CorsHandler;
 import io.vertx.reactivex.ext.web.handler.JWTAuthHandler;
-import org.abondar.experimental.delivery.api.Headers;
 
 import java.util.Arrays;
 import java.util.Set;
@@ -34,6 +39,14 @@ import static org.abondar.experimental.delivery.api.util.ApiUtil.USER_TOTAL_ENDP
 import static org.abondar.experimental.delivery.api.util.ApiUtil.YEAR_PARAM;
 
 public class Handler {
+
+    private final Cache<String, CacheValue> deliveryCache;
+
+    public Handler() {
+        this.deliveryCache = Caffeine.newBuilder()
+                .maximumSize(10_000)
+                .build();
+    }
 
     public BodyHandler bodyHandler() {
         return BodyHandler.create();
@@ -74,26 +87,44 @@ public class Handler {
                 );
     }
 
-    public void tokenHandler(RoutingContext ctx, WebClient webClient, JWTAuth auth) {
-        var payload = ctx.getBodyAsJson();
-        var username = payload.getString(USERNAME_PARAM);
+    public void tokenHandler(RoutingContext ctx, WebClient webClient, JWTAuth auth, CircuitBreaker circuitBreaker) {
+        circuitBreaker.<String>rxExecute(
+                promise -> {
+                    var payload = ctx.getBodyAsJson();
+                    var username = payload.getString(USERNAME_PARAM);
 
-        webClient.post(USER_SERVICE_PORT, SERVER_HOST, AUTH_ENDPOINT)
-                .expect(ResponsePredicate.SC_SUCCESS)
-                .rxSendJson(ctx.getBodyAsJson())
-                .flatMap(resp -> fetchUserDetails(username, webClient))
-                .map(resp -> resp.body().getString(DEVICE_ID_PARAM))
-                .map(deviceId -> generateToken(username, deviceId, auth))
-                .subscribe(
-                        token -> sendToken(ctx, token),
-                        err -> sendErrorResponse(ctx, 401, err)
-                );
+                    webClient.post(USER_SERVICE_PORT, SERVER_HOST, AUTH_ENDPOINT)
+                            .expect(ResponsePredicate.SC_SUCCESS)
+                            .rxSendJson(ctx.getBodyAsJson())
+                            .flatMap(resp -> fetchUserDetails(username, webClient))
+                            .map(resp -> resp.body().getString(DEVICE_ID_PARAM))
+                            .map(deviceId -> generateToken(username, deviceId, auth))
+                            .subscribe(promise::complete,
+                                    err -> {
+                                        if (err instanceof NoStackTraceThrowable) {
+                                            promise.complete("");
+                                        } else {
+                                            promise.fail(err);
+                                        }
+                                    });
+                }
+        ).subscribe(
+                token -> sendToken(ctx, token),
+                err -> sendAuthError(ctx, err)
+        );
+
+
     }
 
     private void sendToken(RoutingContext ctx, String token) {
-        ctx.response()
-                .putHeader(Headers.CONTENT_TYPE.getVal(), Headers.JWT.getVal())
-                .end(token);
+        if (token.isEmpty()) {
+            sendAuthError(ctx, null);
+        } else {
+            ctx.response()
+                    .putHeader(Headers.CONTENT_TYPE.getVal(), Headers.JWT.getVal())
+                    .end(token);
+        }
+
     }
 
     private String generateToken(String username, String deviceId, JWTAuth auth) {
@@ -148,18 +179,56 @@ public class Handler {
                 );
     }
 
-    public void totalHandler(RoutingContext ctx, WebClient webClient) {
+    public void totalHandler(RoutingContext ctx, WebClient webClient, CircuitBreaker circuitBreaker) {
         var deviceId = ctx.user()
                 .principal()
                 .getString(DEVICE_ID_PARAM);
 
-        webClient.get(ACTIVITY_SERVICE_PORT, SERVER_HOST, PATH_DELIM + deviceId + USER_TOTAL_ENDPOINT)
+        circuitBreaker.<Void>executeWithFallback(promise ->
+                webClient.get(ACTIVITY_SERVICE_PORT, SERVER_HOST, PATH_DELIM + deviceId + USER_TOTAL_ENDPOINT)
+                .timeout(5000)
                 .as(BodyCodec.jsonObject())
                 .rxSend()
                 .subscribe(
-                        resp -> sendResponse(ctx, resp),
-                        err -> sendErrorResponse(ctx, 502, err)
-                );
+                        resp -> {
+                            addToCache(deviceId,resp);
+                            sendResponse(ctx, resp);
+                            promise.complete();
+                        },
+                        err -> {
+                            recoverFromCache(ctx,err,deviceId);
+
+                            promise.fail(err);
+                        }
+                ), err -> {
+            recoverFromCache(ctx,err,deviceId);
+            return  null;
+        });
+
+    }
+
+    private void addToCache(String deviceId, HttpResponse<JsonObject> response){
+        var delivered  =response.body().getInteger("delivered");
+        var distance = response.body().getInteger("distance");
+
+        var cacheVal = new CacheValue(delivered,distance);
+        deliveryCache.put(deviceId,cacheVal);
+    }
+
+    private void recoverFromCache(RoutingContext ctx,Throwable err,String deviceId){
+         var val = deliveryCache.getIfPresent(deviceId);
+         if (val==null){
+             sendErrorResponse(ctx, 502, err);
+         } else {
+             var payload = new JsonObject();
+             payload.put("delivered",val.delivered);
+             payload.put("distance",val.distance);
+
+             ctx.response()
+                     .putHeader(Headers.CONTENT_TYPE.getVal(), Headers.JSON.getVal())
+                     .end(payload
+                             .encode());
+         }
     }
 
     public void monthHandler(RoutingContext ctx, WebClient webClient) {
@@ -190,7 +259,7 @@ public class Handler {
         var day = ctx.pathParam(DAY_PARAM);
 
         webClient.get(ACTIVITY_SERVICE_PORT, SERVER_HOST,
-                        PATH_DELIM + deviceId + PATH_DELIM + year + PATH_DELIM + moth+PATH_DELIM+day)
+                        PATH_DELIM + deviceId + PATH_DELIM + year + PATH_DELIM + moth + PATH_DELIM + day)
                 .as(BodyCodec.jsonObject())
                 .rxSend()
                 .subscribe(
@@ -213,6 +282,7 @@ public class Handler {
                         err -> sendErrorResponse(ctx, 502, err)
                 );
     }
+
     private void sendResponse(RoutingContext ctx, HttpResponse<JsonObject> resp) {
         if (resp.statusCode() != 200) {
             sendResponse(ctx, resp.statusCode());
@@ -235,4 +305,27 @@ public class Handler {
     }
 
 
+    private void sendAuthError(RoutingContext ctx, Throwable err) {
+        if (err instanceof OpenCircuitException) {
+            ctx.fail(504);
+        } else if (err instanceof TimeoutStream) {
+            ctx.fail(504);
+        } else {
+            ctx.fail(401);
+        }
+    }
+
+    private static class CacheValue {
+        private final int delivered;
+        private final int distance;
+
+        public CacheValue(int delivered, int distance) {
+            this.delivered = delivered;
+            this.distance = distance;
+        }
+
+
+    }
 }
+
+

@@ -28,4 +28,14 @@ public class ApiUtil {
 
     public static final String CURRENT_ENDPOINT = USER_ENDPOINT + "/current";
 
+    public static final String TOKEN_CIRCUIT_BREAKER = "token-circuit-breaker";
+
+    public static final String ACTIVITY_CIRCUIT_BREAKER = "activity-circuit-breaker";
+
+    public static final String CIRCUIT_BREAKER_OPEN = "open";
+
+    public static final String CIRCUIT_BREAKER_HALF_OPEN = "half open";
+
+    public static final String CIRCUIT_BREAKER_CLOSED = "closed";
+
 }

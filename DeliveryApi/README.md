@@ -27,6 +27,7 @@ API URL - localhost:8000/v1/api
           200 - JWT token
           Body: someToken123
           401 - Unauthorized
+          504 - Circuit breaker enabled
 
 3. GET localhost:8000/v1/api/:username - fetch user data
         Headers:
