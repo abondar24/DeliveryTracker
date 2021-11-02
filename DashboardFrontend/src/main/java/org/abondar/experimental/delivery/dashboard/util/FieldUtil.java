@@ -12,9 +12,6 @@ public class FieldUtil {
 
     public static final String GARAGE_FIELD = "garage";
 
-    public static final String UPDATES_FIELD = "updates";
-
-
     public static final String USERNAME_FIELD = "username";
 
     public static final String DEVICE_ID_FIELD = "deviceId";
