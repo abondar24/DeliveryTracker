@@ -3,6 +3,8 @@ version '1.0-SNAPSHOT'
 
 dependencies {
     implementation ("io.vertx:vertx-kafka-client:$vertxVersion")
+    implementation("io.vertx:vertx-web-client:$vertxVersion")
+    testImplementation ("com.squareup.okhttp:mockwebserver:$mockServerVersion")
 }
 
 mainClassName = "org.abondar.experimental.delivery.stat.Main"

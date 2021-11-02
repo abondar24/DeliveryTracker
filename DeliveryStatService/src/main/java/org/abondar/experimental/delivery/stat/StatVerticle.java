@@ -21,30 +21,29 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import static org.abondar.experimental.delivery.stat.FieldUtil.COUNT_FIELD;
-import static org.abondar.experimental.delivery.stat.FieldUtil.DELIVERED_FIELD;
-import static org.abondar.experimental.delivery.stat.FieldUtil.DISTANCE_FIELD;
-import static org.abondar.experimental.delivery.stat.FieldUtil.GARAGE_FIELD;
-import static org.abondar.experimental.delivery.stat.FieldUtil.SECONDS_FIELD;
-import static org.abondar.experimental.delivery.stat.FieldUtil.THROUGHPUT_FIELD;
-import static org.abondar.experimental.delivery.stat.FieldUtil.TIMESTAMP_FIELD;
-import static org.abondar.experimental.delivery.stat.FieldUtil.UPDATES_FIELD;
-import static org.abondar.experimental.delivery.stat.FieldUtil.USERNAME_FIELD;
-import static org.abondar.experimental.delivery.stat.KafkaUtil.DATA_TOPIC;
-import static org.abondar.experimental.delivery.stat.KafkaUtil.PRODUCER_CONFIG;
-import static org.abondar.experimental.delivery.stat.KafkaUtil.STAT_ACTIVITY_TOPIC;
-import static org.abondar.experimental.delivery.stat.KafkaUtil.STAT_GARAGE_TREND_TOPIC;
-import static org.abondar.experimental.delivery.stat.KafkaUtil.THROUGHPUT_TOPIC;
-import static org.abondar.experimental.delivery.stat.KafkaUtil.UPDATE_TOPIC;
-import static org.abondar.experimental.delivery.stat.KafkaUtil.consumerConfig;
-import static org.abondar.experimental.delivery.stat.util.UserServiceUtil.USER_OWNS_ENDPOINT;
+import static org.abondar.experimental.delivery.stat.util.FieldUtil.COUNT_FIELD;
+import static org.abondar.experimental.delivery.stat.util.FieldUtil.DELIVERED_FIELD;
+import static org.abondar.experimental.delivery.stat.util.FieldUtil.DISTANCE_FIELD;
+import static org.abondar.experimental.delivery.stat.util.FieldUtil.GARAGE_FIELD;
+import static org.abondar.experimental.delivery.stat.util.FieldUtil.SECONDS_FIELD;
+import static org.abondar.experimental.delivery.stat.util.FieldUtil.THROUGHPUT_FIELD;
+import static org.abondar.experimental.delivery.stat.util.FieldUtil.TIMESTAMP_FIELD;
+import static org.abondar.experimental.delivery.stat.util.FieldUtil.UPDATES_FIELD;
+import static org.abondar.experimental.delivery.stat.util.FieldUtil.USERNAME_FIELD;
+import static org.abondar.experimental.delivery.stat.util.KafkaUtil.DATA_TOPIC;
+import static org.abondar.experimental.delivery.stat.util.KafkaUtil.PRODUCER_CONFIG;
+import static org.abondar.experimental.delivery.stat.util.KafkaUtil.STAT_ACTIVITY_TOPIC;
+import static org.abondar.experimental.delivery.stat.util.KafkaUtil.STAT_GARAGE_TREND_TOPIC;
+import static org.abondar.experimental.delivery.stat.util.KafkaUtil.THROUGHPUT_TOPIC;
+import static org.abondar.experimental.delivery.stat.util.KafkaUtil.UPDATE_TOPIC;
+import static org.abondar.experimental.delivery.stat.util.KafkaUtil.consumerConfig;
+import static org.abondar.experimental.delivery.stat.util.UserServiceUtil.USER_DEVICE_ENDPOINT;
 import static org.abondar.experimental.delivery.stat.util.UserServiceUtil.USER_SERVICE_HOST;
 import static org.abondar.experimental.delivery.stat.util.UserServiceUtil.USER_SERVICE_PORT;
 
 public class StatVerticle extends AbstractVerticle {
 
     private static final Logger logger = LoggerFactory.getLogger(StatVerticle.class);
-
 
     private WebClient webClient;
 
@@ -94,7 +93,7 @@ public class StatVerticle extends AbstractVerticle {
         var data = record.value();
 
         return webClient
-                .get(USER_SERVICE_PORT, USER_SERVICE_HOST, USER_OWNS_ENDPOINT + data.getString(DISTANCE_FIELD))
+                .get(USER_SERVICE_PORT, USER_SERVICE_HOST, USER_DEVICE_ENDPOINT + data.getString(DISTANCE_FIELD))
                 .as(BodyCodec.jsonObject())
                 .rxSend()
                 .map(HttpResponse::body)
@@ -114,7 +113,7 @@ public class StatVerticle extends AbstractVerticle {
 
     }
 
-    private String getGarage(KafkaConsumerRecord<String,JsonObject> record){
+    private String getGarage(KafkaConsumerRecord<String, JsonObject> record) {
         return record.value().getString(GARAGE_FIELD);
     }
 
@@ -133,28 +132,28 @@ public class StatVerticle extends AbstractVerticle {
                 KafkaProducerRecord.create(STAT_ACTIVITY_TOPIC, data.getString(USERNAME_FIELD), data));
     }
 
-    private CompletableSource publishTrendUpdate(List<KafkaConsumerRecord<String, JsonObject>> records){
-        if (records.size()>0){
+    private CompletableSource publishTrendUpdate(List<KafkaConsumerRecord<String, JsonObject>> records) {
+        if (records.size() > 0) {
             var garage = getGarage(records.get(0));
 
             var delivered = records.stream()
                     .map(record -> record.value().getInteger(DELIVERED_FIELD))
-                    .reduce(0,Integer::sum);
+                    .reduce(0, Integer::sum);
 
             var distance = records.stream()
                     .map(record -> record.value().getInteger(DISTANCE_FIELD))
-                    .reduce(0,Integer::sum);
+                    .reduce(0, Integer::sum);
 
             var payload = new JsonObject();
             payload.put(TIMESTAMP_FIELD, LocalDateTime.now().toString());
-            payload.put(SECONDS_FIELD,5);
-            payload.put(GARAGE_FIELD,garage);
-            payload.put(DELIVERED_FIELD,delivered);
-            payload.put(DISTANCE_FIELD,distance);
-            payload.put(UPDATES_FIELD,records.size());
+            payload.put(SECONDS_FIELD, 5);
+            payload.put(GARAGE_FIELD, garage);
+            payload.put(DELIVERED_FIELD, delivered);
+            payload.put(DISTANCE_FIELD, distance);
+            payload.put(UPDATES_FIELD, records.size());
 
-            KafkaProducerRecord<String,JsonObject> record = KafkaProducerRecord
-                    .create(STAT_GARAGE_TREND_TOPIC,garage,payload);
+            KafkaProducerRecord<String, JsonObject> record = KafkaProducerRecord
+                    .create(STAT_GARAGE_TREND_TOPIC, garage, payload);
 
             return producer.rxWrite(record);
         } else {

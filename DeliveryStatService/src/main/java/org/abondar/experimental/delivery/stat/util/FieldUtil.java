@@ -19,4 +19,6 @@ public class FieldUtil {
     public static final String COUNT_FIELD = "count";
 
     public static final String THROUGHPUT_FIELD = "throughput";
+
+    public static final String USERNAME_FIELD = "username";
 }

@@ -16,7 +16,7 @@ public class KafkaUtil {
 
     public static final String STAT_ACTIVITY_TOPIC = "stat.activity.updates";
 
-    public static final String STAT_GARAGE_TREND = "stat.garage-trend.updates";
+    public static final String STAT_GARAGE_TREND_TOPIC = "stat.garage-trend.updates";
 
     public static final String THROUGHPUT_TOPIC = "stat.throughput";
 

@@ -7,6 +7,6 @@ public class UserServiceUtil {
 
     public static final String USER_SERVICE_HOST = "localhost";
 
-    public static final String USER_OWNS_ENDPOINT = "/owns/";
+    public static final String USER_DEVICE_ENDPOINT = "/device/";
 
 }
