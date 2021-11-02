@@ -36,11 +36,9 @@ export default {
   },
   methods: {
     login() {
-      console.log("hui")
       if (this.username.length === 0 || this.password.length === 0) {
         return
       }
-      console.log("her")
 
       axios.post("http://localhost:8000/api/v1/token", {
         username: this.username,

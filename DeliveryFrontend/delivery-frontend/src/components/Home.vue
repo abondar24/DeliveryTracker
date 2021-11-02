@@ -140,7 +140,7 @@ export default {
             }
           })
 
-      axios.get(`http://localhost:8000/api/v1/${store.getUsername()}/${now.getUTCMonth() + 1}`, {
+      axios.get(`http://localhost:8000/api/v1/${store.getUsername()}/${now.getFullYear()}/${now.getUTCMonth() + 1}`, {
         headers: {
           'Authorization': `Bearer ${store.getToken()}`
         }
@@ -158,7 +158,7 @@ export default {
             }
           })
 
-      axios.get(`http://localhost:8000/api/v1/${store.getUsername()}/${now.getUTCMonth() + 1}/${now.getDate()}`, {
+      axios.get(`http://localhost:8000/api/v1/${store.getUsername()}/${now.getFullYear()}/${now.getUTCMonth() + 1}/${now.getDate()}`, {
         headers: {
           'Authorization': `Bearer ${store.getToken()}`
         }
@@ -177,7 +177,7 @@ export default {
           })
 
 
-      axios.get(`http://localhost:8000/api/v1/${store.getUsername()}/current}`, {
+      axios.get(`http://localhost:8000/api/v1/${store.getUsername()}/current`, {
         headers: {
           'Authorization': `Bearer ${store.getToken()}`
         }
