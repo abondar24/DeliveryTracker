@@ -25,7 +25,7 @@ import static org.abondar.experimental.delivery.activity.util.KafkaUtil.KAFKA_CO
 import static org.abondar.experimental.delivery.activity.util.KafkaUtil.KAFKA_PRODUCER_TOPIC;
 import static org.abondar.experimental.delivery.activity.util.KafkaUtil.PRODUCER_CONFIG;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ExtendWith({VertxExtension.class})
 public class EventVerticleIntegrationTest {
@@ -71,7 +71,9 @@ public class EventVerticleIntegrationTest {
         Thread.sleep(2000);
         testConsumer.subscribe(KAFKA_PRODUCER_TOPIC)
                 .toFlowable()
-                .subscribe(res-> assertTrue(res.key().contains(message.getString(DEVICE_ID_FIELD))),
+                .subscribe(res-> {assertNotNull(res.key());
+                        testContext.completeNow();
+                        },
                         testContext::failNow);
 
             Thread.sleep(2000);
