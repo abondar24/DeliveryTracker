@@ -14,6 +14,7 @@ The service is split into several microservices
 5. [User Service](DeliveryUserService/README.md)
 6. [Activity Service](DeliveryActivity/README.md)
 7. [Statistics Service](DeliveryStatService/README.md)
+8. [Dashboard](DashboardFrontend/README.md)
 ## Build and Run 
 
 ```yaml
@@ -23,7 +24,3 @@ The service is split into several microservices
 
 foreman start
 ```
-
-## Note
-
-- Integration tests randomly fail with connection refused exception

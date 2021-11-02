@@ -50,8 +50,8 @@ http://localhost:6000 - server
 ```
 ## Build and Run
 ```yaml
-../gradlew clean build
-../gradlew flywayMigrate
+../gradlew :DeliveryActivity:clean :DeliveryActivity:build
+../gradlew :DeliveryActivity:flywayMigrate
 
 java -jar build/libs/DeliveryActivity-1.0-SNAPSHOT-all.jar
 ```

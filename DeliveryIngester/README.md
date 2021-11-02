@@ -9,7 +9,6 @@ http://localhost:4000
 
 ## Build and run
 ```yaml
-../topic_setup.sh
 
 ../gradlew :DeliveryIngester:clean :DeliveryIngester:build
 

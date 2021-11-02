@@ -1,5 +1,7 @@
 # dashboard
 
+Reactivly updated dashboard
+
 ## Project setup
 ```
 npm install

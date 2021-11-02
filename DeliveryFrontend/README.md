@@ -7,7 +7,7 @@ Microservice holding frontend for the application.
 For building frontend separately and running on node dev server check [here](delivery-frontend/README.md).
 
 ```yaml
- ../gradlew :Frontend:clean :Frontend:build
+ ../gradlew :DeliveryFrontend:clean :DeliveryFrontend:build
 
  java -jar build/libs/DeliveryFrontend-1.0-SNAPSHOT-all.jar
 ```
