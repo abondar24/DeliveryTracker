@@ -8,7 +8,6 @@ import com.squareup.okhttp.mockwebserver.MockWebServer;
 import com.squareup.okhttp.mockwebserver.RecordedRequest;
 import io.vertx.core.json.JsonObject;
 import io.vertx.junit5.VertxExtension;
-import io.vertx.junit5.VertxTestContext;
 import io.vertx.reactivex.core.Vertx;
 import io.vertx.reactivex.kafka.client.producer.KafkaProducer;
 import io.vertx.reactivex.kafka.client.producer.KafkaProducerRecord;
@@ -25,7 +24,6 @@ import static org.abondar.experimental.delivery.notificator.NotificatorUtil.DEVI
 import static org.abondar.experimental.delivery.notificator.NotificatorUtil.DEVICE_ID_FIELD;
 import static org.abondar.experimental.delivery.notificator.NotificatorUtil.DISTANCE_FIELD;
 import static org.abondar.experimental.delivery.notificator.NotificatorUtil.EMAIL_PORT;
-import static org.abondar.experimental.delivery.notificator.NotificatorUtil.KAFKA_CONFIG;
 import static org.abondar.experimental.delivery.notificator.NotificatorUtil.KAFKA_TOPIC;
 import static org.abondar.experimental.delivery.notificator.NotificatorUtil.USER_SERVICE_PORT;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -34,18 +32,15 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @ExtendWith({VertxExtension.class})
 public class NotificationIntegrationTest {
 
-    private static KafkaProducer<String, JsonObject> testProducer;
-
-    private static MockWebServer mockUserServer;
-
-    private static GreenMail greenMail;
-
-    private static final Map<String,String> PRODUCER_CONFIG = Map.of(
-            "bootstrap.servers","localhost:9092",
+    private static final Map<String, String> PRODUCER_CONFIG = Map.of(
+            "bootstrap.servers", "localhost:9092",
             "key.serializer", "org.apache.kafka.common.serialization.StringSerializer",
             "value.serializer", "io.vertx.kafka.client.serialization.JsonObjectSerializer",
-            "acks","1"
+            "acks", "1"
     );
+    private static KafkaProducer<String, JsonObject> testProducer;
+    private static MockWebServer mockUserServer;
+    private static GreenMail greenMail;
 
     @BeforeAll
     public static void init(Vertx vertx) throws Exception {
@@ -94,7 +89,7 @@ public class NotificationIntegrationTest {
 
 
     @Test
-    public void sendNotificationTest() throws Exception{
+    public void sendNotificationTest() throws Exception {
         JsonObject json = new JsonObject()
                 .put(DEVICE_ID_FIELD, "test")
                 .put(DELIVERED_FIELD, 100)
@@ -102,15 +97,14 @@ public class NotificationIntegrationTest {
 
 
         testProducer.rxSend(KafkaProducerRecord.create(KAFKA_TOPIC, json.getString(DEVICE_ID_FIELD), json))
-                .subscribe(ok-> assertEquals(KAFKA_TOPIC,ok.getTopic())
+                .subscribe(ok -> assertEquals(KAFKA_TOPIC, ok.getTopic())
                 );
 
 
-
-        greenMail.waitForIncomingEmail(2000,1);
+        greenMail.waitForIncomingEmail(2000, 1);
         Message[] messages = greenMail.getReceivedMessages();
 
-        assertEquals(1,messages.length);
+        assertEquals(1, messages.length);
         assertTrue(messages[0].getContent().toString().contains("You have delivered"));
     }
 

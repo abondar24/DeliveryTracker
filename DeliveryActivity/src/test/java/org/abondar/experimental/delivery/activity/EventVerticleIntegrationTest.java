@@ -71,9 +71,7 @@ public class EventVerticleIntegrationTest {
         Thread.sleep(2000);
         testConsumer.subscribe(KAFKA_PRODUCER_TOPIC)
                 .toFlowable()
-                .subscribe(res-> {assertNotNull(res.key());
-                        testContext.completeNow();
-                        },
+                .subscribe(res-> assertNotNull(res.key()),
                         testContext::failNow);
 
             Thread.sleep(2000);
